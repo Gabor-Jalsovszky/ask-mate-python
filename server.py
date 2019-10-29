@@ -21,7 +21,7 @@ def route_question(question_id):
 
 @app.route('/question/<question_id>/new-answer')
 def route_new_answer(question_id):
-    return render_template("question.html")
+    return render_template("answer.html", question_id=question_id)
 
 if __name__ == '__main__':
     app.run(
