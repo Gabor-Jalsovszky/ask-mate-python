@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request
 
 app = Flask(__name__)
 
+
 @app.route('/')
 @app.route('/list')
 def route_list():
