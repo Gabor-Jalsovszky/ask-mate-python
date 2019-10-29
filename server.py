@@ -19,8 +19,11 @@ def route_add_question():
 def route_question(question_id):
     return render_template("question.html")
 
-@app.route('/question/<question_id>/new-answer')
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(question_id):
+    if request.method == 'POST':
+        return redirect('/question/<question_id>')
+
     return render_template("answer.html", question_id=question_id)
 
 if __name__ == '__main__':
