@@ -1,2 +1,2 @@
-from Flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request
 
