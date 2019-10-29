@@ -8,8 +8,11 @@ app = Flask(__name__)
 def route_list():
     return render_template("list.html")
 
-@app.route('/add-question')
+@app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
+    if request.method == 'POST':
+        return redirect('/list')
+
     return render_template("question.html")
 
 @app.route('/question/<question_id>')
@@ -18,7 +21,7 @@ def route_question(question_id):
 
 @app.route('/question/<question_id>/new-answer')
 def route_new_answer(question_id):
-    return render_template("question.html")
+    return render_template("answer.html", question_id=question_id)
 
 if __name__ == '__main__':
     app.run(
