@@ -35,6 +35,10 @@ def route_new_answer(question_id):
 
 if __name__ == '__main__':
     app.run(
+<<<<<<< HEAD
+        host='127.0.0.1',
+=======
+>>>>>>> 0d08ae9180241f7e1de9f09446d1f201bb7115a4
         port=8000,
         debug=True,
     )
