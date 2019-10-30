@@ -15,6 +15,8 @@ def route_list():
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
+        question = request.form
+        data_manager.add_new_question(question)
         return redirect('/list')
     elif request.method == 'GET':
         return render_template("question.html")
