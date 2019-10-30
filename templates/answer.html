@@ -6,7 +6,7 @@
     </head>
     <body>
         <h3>ANSWER THIS QUESTION:</h3>
-            <form action="/question/{{ question_id }}/new-answer" method="POST">
+            <form action="/question/{{ question_id }}" method="POST">
                 <label for="answer">Your answer:</label><br><br>
                 <textarea id="answer" name="answer" required rows="8" cols="80"></textarea><br><br>
                 <button type="submit">Submit your answer</button><br><br><br>

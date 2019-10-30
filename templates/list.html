@@ -10,15 +10,18 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Question title</th>
+                    <th width="320">Question title</th>
                     <th>Question</th>
                 </tr>
             </thead>
             <tbody>
+                {% for item in questions %}
                 <tr>
-                    <td><a href="/question/1">123456789</a></td>
-                    <td>Mi Uganda fővárosa?</td>
+                    <td> {{ item['id'] }}</td>
+                    <td style="text-align: center"> {{ item['title'] }}</td>
+                    <td> {{ item['message'] }}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
         <ul><a href="/add-question">Ask new question</a></ul>
