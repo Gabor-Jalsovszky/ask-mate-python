@@ -18,11 +18,11 @@ def add_new_question(question):
             if int(line['id']) >= max_id:
                 max_id = int(line['id'])
     with open('sample_data/question.csv', 'a') as questions_file:
-<<<<<<< HEAD
+
         writer = csv.DictWriter(questions_file, fieldnames=fieldnames)
-=======
+
         writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
->>>>>>> 66268e14179c0794ae43dbc075f8caa76d55a31e
+
         writer.writerow({'id': int(max_id) + 1, 'title': question['question_title'], 'message': question['question']})
 
 def add_new_answer():
