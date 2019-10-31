@@ -19,7 +19,7 @@ def add_new_question(question):
                 max_id = int(line['id'])
     with open('sample_data/question.csv', 'a') as questions_file:
 
-        writer = csv.DictWriter(questions_file, fieldnames=fieldnames)
+        writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
 
         writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
 
