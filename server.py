@@ -9,6 +9,7 @@ app = Flask(__name__)
 @app.route('/list')
 def route_list():
     questions = data_manager.get_all_questions()
+    print(questions)
     return render_template("list.html", questions=questions)
 
 
@@ -24,7 +25,8 @@ def route_add_question():
 
 @app.route('/question/<question_id>')
 def route_question(question_id):
-    return render_template("answer.html", question_id)
+    questions = data_manager.get_all_questions()
+    return render_template("question-only.html", question_id=int(question_id), questions=questions)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

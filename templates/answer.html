@@ -2,14 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>ASK-MATE</title>
+        <title>ASKMATE</title>
     </head>
     <body>
-        <h3>ANSWER THIS QUESTION:</h3>
+        <h3>The question is: {{ questions[question_id]['title'] }}</h3>
+        <p>{{ questions[question_id]['message'] }}</p>
             <form action="/question/{{ question_id }}" method="POST">
                 <label for="answer">Your answer:</label><br><br>
                 <textarea id="answer" name="answer" required rows="8" cols="80"></textarea><br><br>
                 <button type="submit">Submit your answer</button><br><br><br>
             </form>
     </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 66268e14179c0794ae43dbc075f8caa76d55a31e

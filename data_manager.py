@@ -1,22 +1,28 @@
 import csv
 
-fieldnames = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+FIELDNAMES = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
 def get_all_questions():
+    list_of_questions = []
     with open('sample_data/question.csv', 'r') as questions_file:
         reader = csv.DictReader(questions_file)
-        questions = list(reader)
-    return questions
+        for line in reader:
+            list_of_questions.append(dict(line))
+    return list_of_questions
 
 def add_new_question(question):
     with open('sample_data/question.csv', 'r') as questions_file:
         max_id = 0
         reader = csv.DictReader(questions_file)
         for line in reader:
-            if line['id'] >= max_id:
-                max_id = line['id']
+            if int(line['id']) >= max_id:
+                max_id = int(line['id'])
     with open('sample_data/question.csv', 'a') as questions_file:
+<<<<<<< HEAD
         writer = csv.DictWriter(questions_file, fieldnames=fieldnames)
+=======
+        writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
+>>>>>>> 66268e14179c0794ae43dbc075f8caa76d55a31e
         writer.writerow({'id': int(max_id) + 1, 'title': question['question_title'], 'message': question['question']})
 
 def add_new_answer():
