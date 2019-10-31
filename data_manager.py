@@ -21,8 +21,6 @@ def add_new_question(question):
 
         writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
 
-        writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
-
         writer.writerow({'id': int(max_id) + 1, 'title': question['question_title'], 'message': question['question']})
 
 def add_new_answer():

@@ -9,7 +9,6 @@ app = Flask(__name__)
 @app.route('/list')
 def route_list():
     questions = data_manager.get_all_questions()
-    print(questions)
     return render_template("list.html", questions=questions)
 
 
@@ -31,10 +30,11 @@ def route_question(question_id):
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(question_id):
+    questions = data_manager.get_all_questions()
     if request.method == 'POST':
         return redirect('/question/<question_id>')
 
-    return render_template("answer.html", question_id=question_id)
+    return render_template("answer.html", question_id=int(question_id), questions = questions)
 
 
 if __name__ == '__main__':

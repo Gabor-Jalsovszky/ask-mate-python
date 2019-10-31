@@ -8,10 +8,12 @@
         <h3>The question is: {{ questions[question_id]['title'] }}</h3>
         <p>{{ questions[question_id]['message'] }}</p>
             <form action="/question/{{ question_id }}" method="POST">
-                <label for="answer">Your answer:</label><br><br>
+                <label for="answer">Your answer:</label><br><br/>
                 <textarea id="answer" name="answer" required rows="8" cols="80"></textarea><br><br>
                 <button type="submit">Submit your answer</button><br><br><br>
+                <input type="checkbox" id="SDFDSFDSFFDS" /><label for="SDFDSFDSFFDS">Elfogadom a feltételeket.</label>
             </form>
+
     </body>
 
 </html>
