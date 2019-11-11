@@ -6,6 +6,13 @@
     </head>
     <body>
         <h3>The question is: {{ questions[question_id]['title'] }}</h3>
-        <p>{{ questions[question_id]['message'] }}</p>
+        <p>{{ questions[question_id]['message'] }}</p><br/>
+        {% for item in answers %}
+            <tr>
+                <td>{{ item['id'] }}</td>
+                <td>{{ item['message'] }}</td>
+            </tr>
+        {% endfor %}
+        <p><a href="/question/{{ question_id }}/new-answer">Add your answer</a></p>
     </body>
 </html>
