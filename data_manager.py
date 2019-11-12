@@ -13,18 +13,12 @@ def get_all_questions(cursor):
     return questions
 
 
-def add_new_question(question):
-    with open('sample_data/question.csv', 'r') as questions_file:
-        max_id = 0
-        reader = csv.DictReader(questions_file)
-        for line in reader:
-            if int(line['id']) >= max_id:
-                max_id = int(line['id'])
-    with open('sample_data/question.csv', 'a') as questions_file:
+@connection.connection_handler
+def add_new_question(cursor, new_user_question):
+    cursor.execute("""
+    INSERT INTO question(title, message)
+    VALUES (%s, %s)""", (new_user_question['question_title'], new_user_question['question']))
 
-        writer = csv.DictWriter(questions_file, fieldnames=FIELDNAMES)
-
-        writer.writerow({'id': int(max_id) + 1, 'title': question['question_title'], 'message': question['question']})
 
 def add_new_answer(answer):
     with open('sample_data/answer.csv', 'r') as answer_file:
@@ -38,6 +32,7 @@ def add_new_answer(answer):
         writer = csv.DictWriter(answer_file, fieldnames=ANSWER_FIELDNAMES)
 
         writer.writerow({'id': int(max_id) + 1, 'message': answer['answer']})
+
 
 def get_answers():
     list_of_answers = []
