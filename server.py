@@ -21,11 +21,11 @@ def route_add_question():
         return render_template("question.html")
 
 
-@app.route('/question/<question_id>')
-def route_question(question_id):
+@app.route('/question/<number_of_question>')
+def route_question(number_of_question):
     questions = data_manager.get_all_questions()
     answers = data_manager.get_answers()
-    return render_template("question-only.html", question_id=int(question_id), questions=questions, answers=answers)
+    return render_template("question-only.html", number_of_question=int(number_of_question), questions=questions, answers=answers)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

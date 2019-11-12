@@ -5,10 +5,10 @@
         <title>Askmate</title>
     </head>
     <body>
-        <h3>The question is: {{ questions[question_id]['title'] }}</h3>
-        <p>{{ questions[question_id]['message'] }}</p><br/>
+        <h3>The question is: {{ questions[number_of_question]['title'] }}</h3>
+        <p>{{ questions[number_of_question]['message'] }}</p><br/>
         <table>
-        {% if answers[question_id]['question_id'] == question_id %}
+        {% if answers[number_of_question]['question_id'] == number_of_question %}
             {% for item in answers %}
                 <tr>
                     <td>{{ item['id'] }}</td>
@@ -17,6 +17,6 @@
             {% endfor %}
         {% endif %}
         </table>
-        <p><a href="/question/{{ question_id }}/new-answer">Add your answer</a></p>
+        <p><a href="/question/{{ number_of_question }}/new-answer">Add your answer</a></p>
     </body>
 </html>
