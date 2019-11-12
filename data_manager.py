@@ -3,12 +3,16 @@ import connection
 FIELDNAMES = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_FIELDNAMES = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
-def get_all_questions():
+@connection.connection_handler
+def get_all_questions(cursor, ):
     list_of_questions = []
-    with open('sample_data/question.csv', 'r') as questions_file:
-        reader = csv.DictReader(questions_file)
-        for line in reader:
-            list_of_questions.append(dict(line))
+    def get_mentor_names_by_first_name(cursor, first_name):
+        cursor.execute("""
+                        SELECT id, submission_time, view_number, vote_number, title, message, image FROM question;
+                        """,
+                       {'f_n': first_name})
+        names = cursor.fetchall()
+        return names
     return list_of_questions
 
 def add_new_question(question):

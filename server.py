@@ -1,9 +1,5 @@
 from flask import Flask, render_template, redirect, request
 
-import psycopg2
-
-import os
-
 import data_manager
 
 app = Flask(__name__)
