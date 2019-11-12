@@ -24,8 +24,8 @@ def route_add_question():
 @app.route('/question/<question_id>')
 def route_question(question_id):
     questions = data_manager.get_all_questions()
-    #answers = data_manager.get_answers()
-    return render_template("question-only.html", question_id=int(question_id), questions=questions)
+    answers = data_manager.get_answers()
+    return render_template("question-only.html", question_id=int(question_id), questions=questions, answers=answers)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def route_new_answer(question_id):
     if request.method == 'POST':
         new_user_answer = request.form
         data_manager.add_new_answer(new_user_answer, question_id)
-        return redirect('/question/<question_id>')
+        return redirect('/question/' + question_id)
 
     questions = data_manager.get_all_questions()
     return render_template("answer.html", question_id=int(question_id), questions=questions)

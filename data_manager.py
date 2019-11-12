@@ -27,10 +27,10 @@ def add_new_answer(cursor, new_user_answer, question_id):
         VALUES (%s, %s)""", (question_id, new_user_answer['answer']))
 
 
-def get_answers():
-    list_of_answers = []
-    with open('sample_data/answer.csv', 'r') as answer_file:
-        reader = csv.DictReader(answer_file)
-        for line in reader:
-            list_of_answers.append(dict(line))
-    return list_of_answers
+@connection.connection_handler
+def get_answers(cursor):
+    cursor.execute("""
+                        SELECT id, submission_time, vote_number, question_id, message, image FROM answer;
+                       """)
+    answers = cursor.fetchall()
+    return answers
