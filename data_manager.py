@@ -44,4 +44,3 @@ def get_answers():
         for line in reader:
             list_of_answers.append(dict(line))
     return list_of_answers
-
