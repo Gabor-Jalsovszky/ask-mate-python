@@ -1,29 +1,33 @@
 <!Doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Ask-Mate-Python</title>
-    </head>
-    <body>
-        <h1>Ask-Mate!</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th width="320">Question title</th>
-                    <th>Question</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in questions %}
-                <tr>
-                    <td> {{ item['id'] }}</td>
-                    <td style="text-align: center"> <a href="/question/{{ item['id'] }}">{{ item['title'] }}</a></td>
-                    <td> {{ item['message'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <ul><a href="/add-question">Ask new question</a></ul>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Ask-Mate-Python</title>
+</head>
+<body>
+<h1>Ask-Mate!</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th width="320">Question title</th>
+        <th>Question</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in questions %}
+        <tr>
+            <td> {{ item['id'] }}</td>
+            <td style="text-align: center"><a href="/question/{{ item['id'] }}">{{ item['title'] }}</a></td>
+            <td> {{ item['message'] }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<p>
+    <a href="/add-question">Ask new question</a>
+</p>
+
+</body>
 </html>
+
