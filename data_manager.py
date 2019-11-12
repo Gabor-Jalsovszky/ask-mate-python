@@ -3,13 +3,15 @@ import connection
 FIELDNAMES = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_FIELDNAMES = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
-def get_all_questions():
-    list_of_questions = []
-    with open('sample_data/question.csv', 'r') as questions_file:
-        reader = csv.DictReader(questions_file)
-        for line in reader:
-            list_of_questions.append(dict(line))
-    return list_of_questions
+
+@connection.connection_handler
+def get_all_questions(cursor):
+    cursor.execute("""
+                    SELECT id, submission_time, view_number, vote_number, title, message, image FROM question;
+                   """)
+    questions = cursor.fetchall()
+    return questions
+
 
 def add_new_question(question):
     with open('sample_data/question.csv', 'r') as questions_file:
