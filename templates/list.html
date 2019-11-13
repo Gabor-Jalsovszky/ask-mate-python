@@ -12,6 +12,16 @@
         <th>ID</th>
         <th width="320">Question title</th>
         <th>Question</th>
+        <th>
+            <form action="/list" method="POST">
+                <select name="sort">
+                    <option selected disabled>Sort Questions</option>
+                    <option value="Ascending_ID">Asc</option>
+                    <option value="Descending_ID">Des</option>
+                </select>
+                <button type="submit">ok</button>
+            </form>
+        </th>
     </tr>
     </thead>
     <tbody>

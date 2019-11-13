@@ -7,10 +7,16 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list')
+@app.route('/list', methods=['GET', 'POST'])
 def route_list():
-    questions = data_manager.get_all_questions()
-    return render_template("list.html", questions=questions)
+    if request.method == 'POST':
+        sort_of_questions = request.form
+        questions = data_manager.get_all_questions(sort_of_questions)
+        return render_template("list.html", questions=questions)
+    else:
+        sort_of_questions = {'sort': 'Ascending_ID'}
+        questions = data_manager.get_all_questions(sort_of_questions)
+        return render_template("list.html", questions=questions)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
