@@ -7,6 +7,7 @@
     <body>
         <h3>The question is: {{ questions[number_of_question]['title'] }}</h3>
         <p>{{ questions[number_of_question]['message'] }}</p><br/>
+        <a href="/question/{{ number_of_question }}">Comment question</a>
         <table>
         {% for item in answers %}
             {% if item['question_id'] == number_of_question %}
