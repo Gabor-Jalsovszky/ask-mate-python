@@ -6,11 +6,11 @@ import data_manager
 app = Flask(__name__)
 
 
-@app.route('/')
+"""""@app.route('/')
 @app.route('/list')
 def route_list():
     questions = data_manager.get_all_questions()
-    return render_template("list.html", questions=questions)
+    return render_template("list.html", questions=questions)"""
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -53,6 +53,19 @@ def route_new_comment(question_id, answer_id):
     questions = data_manager.get_all_questions()
     answers = data_manager.get_answers()
     return render_template("comment.html", question_id=int(question_id), answer_id = int(answer_id), questions=questions, answers=answers)
+
+
+@app.route('/')
+@app.route('/list', methods=['GET', 'POST'])
+def route_list_desc():
+    if request.method == 'POST':
+        sort_of_questions = request.form
+        questions = data_manager.get_all_questions(sort_of_questions)
+        return render_template("list.html", questions=questions)
+    else:
+        sort_of_questions = {'sort': 'Ascending_ID'}
+        questions = data_manager.get_all_questions(sort_of_questions)
+        return render_template("list.html", questions=questions)
 
 
 if __name__ == '__main__':
