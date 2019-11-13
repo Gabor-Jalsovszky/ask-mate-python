@@ -1,8 +1,5 @@
 import connection
 
-FIELDNAMES = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-ANSWER_FIELDNAMES = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
 
 @connection.connection_handler
 def get_all_questions(cursor):
@@ -34,3 +31,10 @@ def get_answers(cursor):
                        """)
     answers = cursor.fetchall()
     return answers
+
+
+@connection.connection_handler
+def post_comment(cursor, new_comment, question_id):
+    cursor.execute("""
+            INSERT INTO answer (question_id, message)
+            VALUES (%s, %s)""", (question_id, new_comment['comment']))

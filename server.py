@@ -2,7 +2,9 @@ from flask import Flask, render_template, redirect, request
 
 import data_manager
 
+
 app = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/list')
@@ -30,6 +32,17 @@ def route_question(number_of_question):
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(question_id):
+    if request.method == 'POST':
+        new_user_answer = request.form
+        data_manager.add_new_answer(new_user_answer, question_id)
+        return redirect('/question/' + question_id)
+
+    questions = data_manager.get_all_questions()
+    return render_template("answer.html", question_id=int(question_id), questions=questions)
+
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def route_new_comment(question_id):
     if request.method == 'POST':
         new_user_answer = request.form
         data_manager.add_new_answer(new_user_answer, question_id)
