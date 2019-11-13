@@ -16,12 +16,6 @@ def get_all_questions(cursor, questions):
                         """)
         questions = cursor.fetchall()
         return questions
-    else:
-        cursor.execute("""
-                                SELECT id, submission_time, view_number, vote_number, title, message, image FROM question;
-                               """)
-        questions = cursor.fetchall()
-        return questions
 
 
 @connection.connection_handler
@@ -52,6 +46,13 @@ def post_comment(cursor, new_comment, question_id, answer_id):
     cursor.execute("""
             INSERT INTO comment (question_id, answer_id, message)
             VALUES (%s, %s, %s)""", (question_id, answer_id, new_comment['comment']))
+
+
+@connection.connection_handler
+def post_question_comment(cursor, new_comment, question_id):
+    cursor.execute("""
+            INSERT INTO comment (question_id, message)
+            VALUES (%s, %s)""", (question_id, new_comment['comment']))
 
 
 @connection.connection_handler

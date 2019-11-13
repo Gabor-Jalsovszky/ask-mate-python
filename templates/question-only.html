@@ -7,7 +7,12 @@
     <body>
         <h3>The question is: {{ questions[number_of_question]['title'] }}</h3>
         <p>{{ questions[number_of_question]['message'] }}</p><br/>
-        <a href="/question/{{ number_of_question }}">Comment question</a>
+        {% for comment in comments %}
+            {% if comment['question_id'] == number_of_question %}
+                <p>{{ comment['message'] }}</p>
+            {% endif %}
+        {% endfor %}
+        <a href="/question/{{ number_of_question }}/new-comment">Comment question</a>
         <table>
         {% for item in answers %}
             {% if item['question_id'] == number_of_question %}
