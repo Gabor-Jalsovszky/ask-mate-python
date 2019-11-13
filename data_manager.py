@@ -38,3 +38,12 @@ def post_comment(cursor, new_comment, question_id, answer_id):
     cursor.execute("""
             INSERT INTO comment (question_id, answer_id, message)
             VALUES (%s, %s, %s)""", (question_id, answer_id, new_comment['comment']))
+
+
+@connection.connection_handler
+def get_comments(cursor):
+    cursor.execute("""
+                        SELECT id, question_id, answer_id, message, submission_time, edited_count FROM comment;
+                       """)
+    comments = cursor.fetchall()
+    return comments

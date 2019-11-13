@@ -11,12 +11,15 @@
         {% for item in answers %}
             {% if item['question_id'] == number_of_question %}
                 <tr>
-                    <td>{{ item['id'] }}</td>
                     <td>{{ item['message'] }}</td>
                 </tr>
-                <tr>
-                    <td></td>
-                </tr>
+                {% for comment in comments %}
+                    {% if comment['answer_id'] == item['id'] %}
+                        <tr>
+                            <td>{{ comment['message'] }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
                 <tr>
                     <td><a href="/question/{{ number_of_question }}/{{ item['id'] }}/new-comment">Add comment</a></td>
                 </tr>
