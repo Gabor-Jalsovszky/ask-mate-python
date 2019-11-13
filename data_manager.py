@@ -34,7 +34,7 @@ def get_answers(cursor):
 
 
 @connection.connection_handler
-def post_comment(cursor, new_comment, question_id):
+def post_comment(cursor, new_comment, question_id, answer_id):
     cursor.execute("""
-            INSERT INTO answer (question_id, message)
-            VALUES (%s, %s)""", (question_id, new_comment['comment']))
+            INSERT INTO comment (question_id, answer_id, message)
+            VALUES (%s, %s, %s)""", (question_id, answer_id, new_comment['comment']))

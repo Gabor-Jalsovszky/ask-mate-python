@@ -15,7 +15,10 @@
                     <td>{{ item['message'] }}</td>
                 </tr>
                 <tr>
-                    <td><a href="comment.html">Add comment</a></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="/question/{{ number_of_question }}/{{ item['id'] }}/new-comment">Add comment</a></td>
                 </tr>
             {% endif %}
         {% endfor %}

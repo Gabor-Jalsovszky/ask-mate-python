@@ -41,15 +41,16 @@ def route_new_answer(question_id):
     return render_template("answer.html", question_id=int(question_id), questions=questions)
 
 
-@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
-def route_new_comment(question_id):
+@app.route('/question/<question_id>/<answer_id>/new-comment', methods=['GET', 'POST'])
+def route_new_comment(question_id, answer_id):
     if request.method == 'POST':
-        new_user_answer = request.form
-        data_manager.add_new_answer(new_user_answer, question_id)
+        new_comment = request.form
+        data_manager.post_comment(new_comment, question_id, answer_id)
         return redirect('/question/' + question_id)
 
     questions = data_manager.get_all_questions()
-    return render_template("answer.html", question_id=int(question_id), questions=questions)
+    answers = data_manager.get_answers()
+    return render_template("comment.html", question_id=int(question_id), answer_id = int(answer_id), questions=questions, answers=answers)
 
 
 if __name__ == '__main__':
