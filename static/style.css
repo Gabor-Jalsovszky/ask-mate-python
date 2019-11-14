@@ -1,7 +1,7 @@
 
 
 a {
-    color: firebrick;
+    color: black;
 }
 
 p {
@@ -19,14 +19,14 @@ body {
     padding: 10px;
 }
 
-.h1-title-format {
+.main-page-title-format {
     text-align: left;
     padding-left: 10%;
     font-size: 50px;
     color: darkblue;
 }
 
-.new-question-button-pozition {
+.new-question-button-position {
     text-align: left;
     padding-left: 10%;
 }
@@ -59,18 +59,60 @@ body {
     padding: 10px;
 }
 
-.h3-text-format {
-    font-size: 30px;
+.h1-text-format {
+    text-decoration-line: underline;
+    font-size: 40px;
     color:darkblue;
+    text-align: center;
+}
+
+.h2-text-format {
+    border: darkblue solid;
+    background-color: white;
+    font-size: 30px;
+    color: darkblue;
     text-align: left;
+}
+
+.h3-text-format {
+    font-size: 20px;
+    color: darkblue;
+    text-align: left;
+    padding-left: 10%;
 }
 
 .other-page-body {
     font-family: "Ubuntu Light";
-    padding: 10px;
     padding-left: 10%;
+    padding-right: 10%;
 }
 
 .label-format {
     color: darkblue;
+}
+
+.question-answers-format {
+    font-size: 30px;
+    color: darkblue;
+    text-align: left;
+}
+
+.answer-comment-format {
+    font-size: 20px;
+    color: darkblue;
+    text-align: left;
+    padding-left: 20%;
+}
+
+.add-answer-button{
+    font-size: 30px;
+    color: firebrick;
+    text-align: left;
+}
+
+.new-question-page-body {
+    font-family: "Ubuntu Light";
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
 }

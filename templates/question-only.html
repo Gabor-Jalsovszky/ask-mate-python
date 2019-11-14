@@ -7,11 +7,11 @@
     </head>
     <body>
         <div class="other-page-body">
-            <h3  class="h3-text-format">The question is: {{ questions[number_of_question]['title'] }}</h3>
-            <p>{{ questions[number_of_question]['message'] }}</p><br/>
+            <h1 class="h1-text-format">The question is: {{ questions[number_of_question]['title'] }}</h1>
+            <h2 class="h2-text-format">{{ questions[number_of_question]['message'] }}</h2><br/>
             {% for comment in comments %}
                 {% if comment['question_id'] == number_of_question and comment['answer_id'] == None %}
-                    <p>{{ comment['message'] }}</p>
+                    <h3 class="h3-text-format">{{ comment['message'] }}</h3>
                 {% endif %}
             {% endfor %}
             <a href="/question/{{ number_of_question }}/new-comment">Comment question</a>
@@ -19,12 +19,12 @@
             {% for item in answers %}
                 {% if item['question_id'] == number_of_question %}
                     <tr>
-                        <td>{{ item['message'] }}</td>
+                        <td class="question-answers-format">{{ item['message'] }}</td>
                     </tr>
                     {% for comment in comments %}
                         {% if comment['answer_id'] == item['id'] %}
                             <tr>
-                                <td>{{ comment['message'] }}</td>
+                                <td class="answer-comment-format">{{ comment['message'] }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
@@ -34,7 +34,7 @@
                 {% endif %}
             {% endfor %}
             </table>
-            <p><a href="/question/{{ number_of_question }}/new-answer">Add your answer</a></p>
+            <p><a class="add-answer-button" href="/question/{{ number_of_question }}/new-answer">Add your answer</a></p>
         </div>
     </body>
 </html>

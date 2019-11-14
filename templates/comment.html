@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <title>Askmate</title>
-        <link rel="stylesheet" href="../../static/style.css">
+        <link rel="stylesheet" href="../../../static/style.css">
     </head>
     <body>
         <div class="other-page-body">
-            <h3>The question is: {{ questions[question_id]['title'] }}</h3>
-            <p>{{ questions[question_id]['message'] }}</p>
+            <h1 class="h1-text-format">The question is: {{ questions[question_id]['title'] }}</h1>
+            <h2 class="h2-text-format">{{ questions[question_id]['message'] }}</h2>
             {% for item in answers %}
                 {% if item['id'] == answer_id %}
-                    <p>{{ item['message'] }}</p>
+                    <p class="question-answers-format">{{ item['message'] }}</p>
                 {% endif %}
             {% endfor %}
                 <form action="/question/{{ question_id }}/{{ answer_id }}/new-comment" method="POST">
-                    <label for="comment">Your comment</label><br><br/>
+                    <label class="label-format" for="comment">Your comment:</label><br><br/>
                     <textarea id="comment" name="comment" required rows="8" cols="80"></textarea><br><br>
                     <button type="submit">Submit your comment</button><br><br><br>
                 </form>
