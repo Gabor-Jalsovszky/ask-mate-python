@@ -10,7 +10,7 @@
             <h3  class="h3-text-format">The question is: {{ questions[number_of_question]['title'] }}</h3>
             <p>{{ questions[number_of_question]['message'] }}</p><br/>
             {% for comment in comments %}
-                {% if comment['question_id'] == number_of_question %}
+                {% if comment['question_id'] == number_of_question and comment['answer_id'] == None %}
                     <p>{{ comment['message'] }}</p>
                 {% endif %}
             {% endfor %}
