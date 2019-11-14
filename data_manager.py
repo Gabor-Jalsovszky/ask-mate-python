@@ -16,6 +16,49 @@ def get_all_questions(cursor, order):
                         """)
         questions = cursor.fetchall()
         return questions
+    elif order == 'Ascending_Question':
+        cursor.execute("""
+                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
+                            ORDER BY title ASC; 
+                            """)
+        questions = cursor.fetchall()
+        return questions
+    elif order == 'Descending_Question':
+        cursor.execute("""
+                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
+                            ORDER BY title DESC; 
+                            """)
+        questions = cursor.fetchall()
+        return questions
+    elif order == 'Ascending_description':
+        cursor.execute("""
+                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
+                            ORDER BY message ASC; 
+                            """)
+        questions = cursor.fetchall()
+        return questions
+    elif order == 'Descending_description':
+        cursor.execute("""
+                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
+                            ORDER BY message DESC; 
+                            """)
+        questions = cursor.fetchall()
+        return questions
+    elif order == 'Ascending_date':
+        cursor.execute("""
+                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
+                            ORDER BY submission_time ASC; 
+                            """)
+        questions = cursor.fetchall()
+        return questions
+    elif order == 'Descending_date':
+        cursor.execute("""
+                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
+                            ORDER BY submission_time DESC; 
+                            """)
+        questions = cursor.fetchall()
+        return questions
+
 
 
 @connection.connection_handler

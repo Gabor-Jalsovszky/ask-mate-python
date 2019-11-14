@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/list')
 def route_list():
     order = request.args.get('sort')
-    if order == 'Ascending_ID' or order == 'Descending_ID':
+    if order != None:
         questions = data_manager.get_all_questions(order)
     else:
         order = 'Ascending_ID'
