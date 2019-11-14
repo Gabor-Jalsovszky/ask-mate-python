@@ -54,8 +54,8 @@ def route_new_comment(question_id, answer_id):
         new_comment = request.form
         data_manager.post_comment(new_comment, question_id, answer_id)
         return redirect('/question/' + question_id)
-
-    questions = data_manager.get_all_questions()
+    order = 'Ascending_ID'
+    questions = data_manager.get_all_questions(order)
     answers = data_manager.get_answers()
     return render_template("comment.html", question_id=int(question_id), answer_id = int(answer_id), questions=questions, answers=answers)
 
@@ -67,8 +67,8 @@ def route_new_question_comment(question_id):
         data_manager.post_question_comment(new_comment, question_id)
         return redirect('/question/' + question_id)
 
-    sort_of_questions = {'sort': 'Ascending_ID'}
-    questions = data_manager.get_all_questions(sort_of_questions)
+    order = 'Ascending_ID'
+    questions = data_manager.get_all_questions(order)
     return render_template("comment_question.html", question_id=int(question_id), questions=questions)
 
 
