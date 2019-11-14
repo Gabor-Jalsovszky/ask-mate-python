@@ -3,15 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>Askmate</title>
-        <link rel="stylesheet" href="static/style.css">
+        <link rel="stylesheet" href="../../static/style.css">
     </head>
     <body>
-        <h3>The question is: {{ questions[question_id]['title'] }}</h3>
-        <p>{{ questions[question_id]['message'] }}</p>
-            <form action="/question/{{ question_id }}/new-comment" method="POST">
-                <label for="comment">Your comment</label><br><br/>
-                <textarea id="comment" name="comment" required rows="8" cols="80"></textarea><br><br>
-                <button type="submit">Submit your comment</button><br><br><br>
-            </form>
+        <div class="other-page-body">
+            <h3>The question is: {{ questions[question_id]['title'] }}</h3>
+            <p>{{ questions[question_id]['message'] }}</p>
+                <form action="/question/{{ question_id }}/new-comment" method="POST">
+                    <label for="comment">Your comment</label><br><br/>
+                    <textarea id="comment" name="comment" required rows="8" cols="80"></textarea><br><br>
+                    <button type="submit">Submit your comment</button><br><br><br>
+                </form>
+        </div>
     </body>
 </html>
