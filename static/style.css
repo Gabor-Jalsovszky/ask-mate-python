@@ -9,8 +9,11 @@ p {
     color: darkblue;
 }
 
-.main-page-body {
+body {
     background: lavender;
+}
+
+.main-page-body {
     font-family: "Ubuntu Light";
     text-align: center;
     padding: 10px;
@@ -62,8 +65,7 @@ p {
     text-align: left;
 }
 
-.new-q/a-page-body {
-    background: lavender;
+.other-page-body {
     font-family: "Ubuntu Light";
     padding: 10px;
     padding-left: 10%;

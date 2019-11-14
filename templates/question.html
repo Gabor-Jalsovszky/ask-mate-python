@@ -5,15 +5,17 @@
         <title>Askmate</title>
         <link rel="stylesheet" href="static/style.css">
     </head>
-    <body class="new-q/a-page-body">
-        <h3 class="h3-text-format">ADD NEW QUESTION</h3>
-            <form action="/add-question" method="POST">
-                <label class="label-format" for="question_title">Title:</label><br><br>
-                <input id="question_title" name="question_title" required><br><br>
-                <label class="label-format" for="question">Your question:</label><br><br>
-                <textarea id="question" name="question" required rows="8" cols="80"></textarea><br><br>
-                <button type="submit">Submit question</button><br><br><br>
-            </form>
+    <body>
+        <div class="other-page-body">
+            <h3 class="h3-text-format">ADD NEW QUESTION</h3>
+                <form action="/add-question" method="POST">
+                    <label class="label-format" for="question_title">Title:</label><br><br>
+                    <input id="question_title" name="question_title" required><br><br>
+                    <label class="label-format" for="question">Your question:</label><br><br>
+                    <textarea id="question" name="question" required rows="8" cols="80"></textarea><br><br>
+                    <button type="submit">Submit question</button><br><br><br>
+                </form>
+        </div>
     </body>
 </html>
 
