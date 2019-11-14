@@ -12,6 +12,7 @@
         <th>ID</th>
         <th width="320">Question title</th>
         <th>Question</th>
+        <th>Submission Time</th>
         <th>
             <form action="/list" method="POST">
                 <select name="sort">
@@ -30,6 +31,7 @@
             <td> {{ item['id'] }}</td>
             <td style="text-align: center"><a href="/question/{{ item['id'] }}">{{ item['title'] }}</a></td>
             <td> {{ item['message'] }}</td>
+            <td> {{ item['submission_time'] }}</td>
         </tr>
     {% endfor %}
     </tbody>
