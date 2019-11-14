@@ -62,9 +62,13 @@ p {
     text-align: left;
 }
 
-.new-question-page-body {
+.new-q/a-page-body {
     background: lavender;
     font-family: "Ubuntu Light";
     padding: 10px;
     padding-left: 10%;
+}
+
+.label-format {
+    color: darkblue;
 }

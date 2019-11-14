@@ -5,7 +5,7 @@
         <title>Askmate</title>
         <link rel="stylesheet" href="static/style.css">
     </head>
-    <body>
+    <body class="new-q/a-page-body">
         <h3>The question is: {{ questions[question_id]['title'] }}</h3>
         <p>{{ questions[question_id]['message'] }}</p>
             <form action="/question/{{ question_id }}/new-answer" method="POST">
