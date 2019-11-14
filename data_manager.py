@@ -22,14 +22,14 @@ def get_all_questions(cursor, order):
 def add_new_question(cursor, new_user_question):
     cursor.execute("""
     INSERT INTO question(title, message, submission_time)
-    VALUES (%s, %s, CURRENT_TIMESTAMP)""", (new_user_question['question_title'], new_user_question['question']))
+    VALUES (%s, %s, CURRENT_TIMESTAMP(0))""", (new_user_question['question_title'], new_user_question['question']))
 
 
 @connection.connection_handler
 def add_new_answer(cursor, new_user_answer, question_id):
     cursor.execute("""
         INSERT INTO answer (question_id, message, submission_time)
-        VALUES (%s, %s, CURRENT_TIMESTAMP)""", (question_id, new_user_answer['answer']))
+        VALUES (%s, %s, CURRENT_TIMESTAMP(0))""", (question_id, new_user_answer['answer']))
 
 
 @connection.connection_handler

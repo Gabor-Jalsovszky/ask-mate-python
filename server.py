@@ -43,8 +43,8 @@ def route_new_answer(question_id):
         new_user_answer = request.form
         data_manager.add_new_answer(new_user_answer, question_id)
         return redirect('/question/' + question_id)
-
-    questions = data_manager.get_all_questions()
+    order = 'Ascending_ID'
+    questions = data_manager.get_all_questions(order)
     return render_template("answer.html", question_id=int(question_id), questions=questions)
 
 
