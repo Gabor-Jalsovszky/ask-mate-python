@@ -1,0 +1,54 @@
+body {
+    background: lavender;
+    font-family: "Ubuntu Light";
+    margin:0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 30px;
+    color: darkblue;
+}
+
+h3 {
+    font-size: 23px;
+    color:darkblue;
+}
+
+p {
+    font-size: 15px;
+    color: darkblue;
+}
+
+.list-table {
+    font-size: 20px;
+    color: darkblue;
+    width: 80%;
+    margin: 0px auto;
+    border-collapse: collapse;
+
+}
+
+th{
+    background-color: cadetblue;
+    padding: 10px;
+}
+
+.select-th{
+    background-color: transparent;
+}
+
+.list-table tr{
+    margin: 0px;
+}
+
+.list-table td {
+
+    margin: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+a {
+    color: firebrick;
+}

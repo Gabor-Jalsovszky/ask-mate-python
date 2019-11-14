@@ -1,18 +1,19 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Ask-Mate-Python</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
 <h1>Ask-Mate!</h1>
-<table>
-    <thead>
+<table class="list-table">
+    <!--<thead>-->
     <tr>
         <th>ID</th>
         <th width="320">Question title</th>
         <th>Question</th>
-        <th>
+        <th class="select-th">
             <form action="/list" method="POST">
                 <select name="sort">
                     <option selected disabled>Sort Questions</option>
@@ -23,8 +24,8 @@
             </form>
         </th>
     </tr>
-    </thead>
-    <tbody>
+    <!--</thead>-->
+   <!-- <tbody>-->
     {% for item in questions %}
         <tr>
             <td> {{ item['id'] }}</td>
@@ -32,7 +33,7 @@
             <td> {{ item['message'] }}</td>
         </tr>
     {% endfor %}
-    </tbody>
+    <!--</tbody>-->
 </table>
 <p>
     <a href="/add-question">Ask new question</a>
