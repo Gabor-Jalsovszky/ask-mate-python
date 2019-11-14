@@ -30,8 +30,7 @@ def route_add_question():
 
 @app.route('/question/<number_of_question>')
 def route_question(number_of_question):
-    sort_of_questions = {'sort': 'Ascending_ID'}
-    questions = data_manager.get_all_questions(sort_of_questions)
+    questions = data_manager.get_all_questions(order='Ascending_ID')
     answers = data_manager.get_answers()
     comments = data_manager.get_comments()
     return render_template("question-only.html", number_of_question=int(number_of_question),
