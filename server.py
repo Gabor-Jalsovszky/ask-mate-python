@@ -49,7 +49,7 @@ def route_new_answer(question_id):
 
 
 @app.route('/question/<question_id>/<answer_id>/new-comment', methods=['GET', 'POST'])
-def route_new_comment(question_id, answer_id):
+def route_new_comment(question_id: int, answer_id: int):
     if request.method == 'POST':
         new_comment = request.form
         data_manager.post_comment(new_comment, question_id, answer_id)

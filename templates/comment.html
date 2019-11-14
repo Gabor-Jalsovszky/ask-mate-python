@@ -9,7 +9,11 @@
         <div class="other-page-body">
             <h3>The question is: {{ questions[question_id]['title'] }}</h3>
             <p>{{ questions[question_id]['message'] }}</p>
-            <p>{{ answers[answer_id]['message'] }}</p>
+            {% for item in answers %}
+                {% if item['id'] == answer_id %}
+                    <p>{{ item['message'] }}</p>
+                {% endif %}
+            {% endfor %}
                 <form action="/question/{{ question_id }}/{{ answer_id }}/new-comment" method="POST">
                     <label for="comment">Your comment</label><br><br/>
                     <textarea id="comment" name="comment" required rows="8" cols="80"></textarea><br><br>
