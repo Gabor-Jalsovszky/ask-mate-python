@@ -2,14 +2,14 @@ import connection
 
 
 @connection.connection_handler
-def get_all_questions(cursor, questions):
-    if questions['sort'] == 'Ascending_ID':
+def get_all_questions(cursor, order):
+    if order == 'Ascending_ID':
         cursor.execute("""
                         SELECT id, submission_time, view_number, vote_number, title, message, image FROM question;
                        """)
         questions = cursor.fetchall()
         return questions
-    elif questions['sort'] == 'Descending_ID':
+    elif order == 'Descending_ID':
         cursor.execute("""
                         SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
                         ORDER BY id DESC; 
