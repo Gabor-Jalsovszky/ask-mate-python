@@ -1,7 +1,7 @@
 
 
 a {
-    color: black;
+    color: firebrick;
 }
 
 p {
@@ -10,7 +10,7 @@ p {
 }
 
 body {
-    background: lavender;
+    background-image: url("/static/images/abstractwpproject.jpg");
 }
 
 .main-page-body {
@@ -20,10 +20,10 @@ body {
 }
 
 .main-page-title-format {
-    text-align: left;
+    text-align: center;
     padding-left: 10%;
     font-size: 50px;
-    color: darkblue;
+    color: lightblue;
 }
 
 .new-question-button-position {
@@ -41,42 +41,40 @@ body {
 }
 
 .th-format {
-    border: darkblue solid 5px;
+    border: black solid 5px;
     font-size: 25px;
     background-color: cadetblue;
     padding: 10px;
 }
 
 .td-format {
-    border: darkblue solid;
+    border: black solid;
     background-color: white;
     padding: 10px;
 }
 
 .select-th{
-    border-left: solid darkblue 5px;
     background-color: transparent;
-    padding: 10px;
+    padding-left: 182px;
 }
 
 .h1-text-format {
     text-decoration-line: underline;
     font-size: 40px;
-    color:darkblue;
+    color: lightblue;
     text-align: center;
 }
 
 .h2-text-format {
-    border: darkblue solid;
-    background-color: white;
+    background-color: lightblue;
     font-size: 30px;
     color: darkblue;
-    text-align: left;
+    text-align: center;
 }
 
 .h3-text-format {
     font-size: 20px;
-    color: darkblue;
+    color: lightblue;
     text-align: left;
     padding-left: 10%;
 }
@@ -88,25 +86,25 @@ body {
 }
 
 .label-format {
-    color: darkblue;
+    color: lightblue;
 }
 
 .question-answers-format {
     font-size: 30px;
-    color: darkblue;
+    color: lightblue;
     text-align: left;
 }
 
 .answer-comment-format {
     font-size: 20px;
-    color: darkblue;
+    color: lightblue;
     text-align: left;
-    padding-left: 20%;
+    padding-left: 145px;
 }
 
 .add-answer-button{
     font-size: 30px;
-    color: firebrick;
+    color: lightblue;
     text-align: left;
 }
 
