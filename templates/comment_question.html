@@ -7,8 +7,12 @@
     </head>
     <body>
         <div class="other-page-body">
-            <h1 class="h1-text-format">The question is: {{ questions[question_id]['title'] }}</h1>
-            <h2 class="h2-text-format">{{ questions[question_id]['message'] }}</h2>
+            {% for item in questions %}
+                {% if item['id'] == question_id %}
+                    <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
+                    <h2 class="h2-text-format">{{ item['message'] }}</h2>
+                {% endif %}
+            {% endfor %}
                 <form action="/question/{{ question_id }}/new-comment" method="POST">
                     <label class="label-format" for="comment">Your comment:</label><br><br/>
                     <textarea id="comment" name="comment" required rows="8" cols="80"></textarea><br><br>
