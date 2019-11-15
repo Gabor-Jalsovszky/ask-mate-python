@@ -11,6 +11,7 @@
             {% if item['id'] == number_of_question %}
                 <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
                 <h2 class="h2-text-format">{{ item['message'] }}</h2><br/>
+                <label class="label-format">Comments:</label>
             {% endif %}
         {% endfor %}
             {% for comment in comments %}
