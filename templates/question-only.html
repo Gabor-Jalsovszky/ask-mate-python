@@ -21,13 +21,11 @@
                     <tr>
                         <td class="question-answers-format">{{ item['message'] }}</td>
                     </tr>
-                    {#{% for comment in comments %}
-                        {% if comment['answer_id'] == item['id'] %}
+                    {% for comment in answer_comments %}
                             <tr>
                                 <td class="answer-comment-format">{{ comment['message'] }}</td>
                             </tr>
-                        {% endif %}
-                    {% endfor %}#}
+                    {% endfor %}
                     <tr>
                         <td><a href="/question/{{ number_of_question }}/{{ item['id'] }}/new-comment">Add comment</a></td>
                     </tr>
