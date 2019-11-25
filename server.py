@@ -10,11 +10,10 @@ app = Flask(__name__)
 @app.route('/list')
 def route_list():
     order = request.args.get('sort')
-    if order != None:
-        questions = data_manager.get_all_questions(order)
-    else:
-        order = 'Ascending_ID'
-        questions = data_manager.get_all_questions(order)
+    if order is None:
+        questions = data_manager.sort_questions("ORDER BY id ASC")
+    elif order is not None:
+        questions = data_manager.sort_questions(order)
     return render_template("list.html", questions=questions)
 
 
@@ -30,11 +29,11 @@ def route_add_question():
 
 @app.route('/question/<number_of_question>')
 def route_question(number_of_question):
-    questions = data_manager.get_all_questions(order='Ascending_ID')
-    answers = data_manager.get_answers()
-    comments = data_manager.get_comments()
+    question = data_manager.get_data('question', number_of_question)
+    answers = data_manager.get_data('answer', question_id=number_of_question)
+    question_comments = data_manager.get_question_comments(number_of_question)
     return render_template("question-only.html", number_of_question=int(number_of_question),
-                           questions=questions, answers=answers, comments=comments)
+                           question=question, answers=answers, question_comments=question_comments)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
@@ -43,8 +42,7 @@ def route_new_answer(question_id):
         new_user_answer = request.form
         data_manager.add_new_answer(new_user_answer, question_id)
         return redirect('/question/' + question_id)
-    order = 'Ascending_ID'
-    questions = data_manager.get_all_questions(order)
+    questions = data_manager.get_data('question')
     return render_template("answer.html", question_id=int(question_id), questions=questions)
 
 
@@ -54,9 +52,8 @@ def route_new_comment(question_id: int, answer_id: int):
         new_comment = request.form
         data_manager.post_comment(new_comment, question_id, answer_id)
         return redirect('/question/' + question_id)
-    order = 'Ascending_ID'
-    questions = data_manager.get_all_questions(order)
-    answers = data_manager.get_answers()
+    questions = data_manager.get_data('question')
+    answers = data_manager.get_data('answer')
     return render_template("comment.html", question_id=int(question_id), answer_id = int(answer_id), questions=questions, answers=answers)
 
 
@@ -66,9 +63,7 @@ def route_new_question_comment(question_id):
         new_comment = request.form
         data_manager.post_question_comment(new_comment, question_id)
         return redirect('/question/' + question_id)
-
-    order = 'Ascending_ID'
-    questions = data_manager.get_all_questions(order)
+    questions = data_manager.get_data('question')
     return render_template("comment_question.html", question_id=int(question_id), questions=questions)
 
 

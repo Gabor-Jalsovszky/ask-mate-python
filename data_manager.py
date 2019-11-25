@@ -1,63 +1,25 @@
 import connection
 
+@connection.connection_handler
+def get_data(cursor, data_table, id='', question_id='', answer_id=''):
+    cursor.execute(f"""
+                        SELECT * FROM {data_table}{" WHERE id = " + id if id else ''}
+                        {" WHERE question_id = " + question_id if question_id else ''}
+                        {" AND answer_id = " + answer_id if answer_id else ''};""")
+    print(cursor.query)
+    data = cursor.fetchall()
+    return data
+
 
 @connection.connection_handler
-def get_all_questions(cursor, order):
-    if order == 'Ascending_ID':
-        cursor.execute("""
-                        SELECT id, submission_time, view_number, vote_number, title, message, image FROM question;
-                       """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Descending_ID':
-        cursor.execute("""
-                        SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                        ORDER BY id DESC; 
-                        """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Ascending_Question':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY title ASC; 
-                            """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Descending_Question':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY title DESC; 
-                            """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Ascending_description':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY message ASC; 
-                            """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Descending_description':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY message DESC; 
-                            """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Ascending_date':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY submission_time ASC; 
-                            """)
-        questions = cursor.fetchall()
-        return questions
-    elif order == 'Descending_date':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY submission_time DESC; 
-                            """)
-        questions = cursor.fetchall()
-        return questions
+def sort_questions(cursor, order):
+    cursor.execute(f"""
+                    SELECT id, submission_time, view_number, vote_number, title, message, image
+                    FROM question
+                    {order};
+                   """)
+    questions = cursor.fetchall()
+    return questions
 
 
 @connection.connection_handler
@@ -75,15 +37,6 @@ def add_new_answer(cursor, new_user_answer, question_id):
 
 
 @connection.connection_handler
-def get_answers(cursor):
-    cursor.execute("""
-                        SELECT id, submission_time, vote_number, question_id, message, image FROM answer;
-                       """)
-    answers = cursor.fetchall()
-    return answers
-
-
-@connection.connection_handler
 def post_comment(cursor, new_comment, question_id, answer_id):
     cursor.execute("""
             INSERT INTO comment (question_id, answer_id, message)
@@ -98,11 +51,25 @@ def post_question_comment(cursor, new_comment, question_id):
 
 
 @connection.connection_handler
-def get_comments(cursor):
-    cursor.execute("""
-                        SELECT id, question_id, answer_id, message, submission_time, edited_count FROM comment;
+def get_question_comments(cursor, question_id):
+    cursor.execute(f"""
+                        SELECT q.id, c.message, c.submission_time, c.edited_count 
+                        FROM question q
+                        JOIN comment c ON q.id = c.question_id
+                        WHERE q.id = {question_id};
                        """)
-    comments = cursor.fetchall()
-    return comments
+    question_comments = cursor.fetchall()
+    return question_comments
 
+
+@connection.connection_handler
+def get_answer_comments(cursor, id):
+    cursor.execute(f"""
+                        SELECT a.id, c.message, c.submission_time, c.edited_count 
+                        FROM answer a
+                        JOIN comment c ON a.id = c.question_id
+                        WHERE q.id = {question_id};
+                       """)
+    question_comments = cursor.fetchall()
+    return question_comments
 

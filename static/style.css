@@ -21,7 +21,6 @@ body {
 
 .main-page-title-format {
     text-align: center;
-    padding-left: 10%;
     font-size: 50px;
     color: lightblue;
 }
@@ -55,7 +54,7 @@ body {
 
 .select-th{
     background-color: transparent;
-    padding-left: 182px;
+    padding-left: 130px;
 }
 
 .h1-text-format {

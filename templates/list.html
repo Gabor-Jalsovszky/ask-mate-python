@@ -13,14 +13,14 @@
                     <form action="/list" method="GET">
                         <select name="sort">
                             <option selected disabled>Sort Questions</option>
-                            <option value="Ascending_ID">By ID (Ascending)</option>
-                            <option value="Descending_ID">By ID (Descending)</option>
-                            <option value="Ascending_Question">By Question (Ascending)</option>
-                            <option value="Descending_Question">By Question (Descending)</option>
-                            <option value="Descending_description">By Description (Descending)</option>
-                            <option value="Ascending_description">By Description (Ascending)</option>
-                            <option value="Descending_date">By Date (Descending)</option>
-                            <option value="Ascending_date">By Date (Ascending)</option>
+                            <option value="ORDER BY id ASC">By ID (Ascending)</option>
+                            <option value="ORDER BY id DESC">By ID (Descending)</option>
+                            <option value="ORDER BY title ASC">By Question (Ascending)</option>
+                            <option value="ORDER BY title DESC">By Question (Descending)</option>
+                            <option value="ORDER BY message ASC">By Description (Ascending)</option>
+                            <option value="ORDER BY message DESC">By Description (Descending)</option>
+                            <option value="ORDER BY submission_time ASC">By Date (Ascending)</option>
+                            <option value="ORDER BY submission_time DESC">By Date (Descending)</option>
                         </select>
                         <button type="submit">ok</button>
                     </form>
