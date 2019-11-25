@@ -60,10 +60,10 @@ def get_question_comments(cursor, question_id):
                         JOIN comment ON question.id = comment.question_id
                         WHERE question.id = {question_id} AND comment.answer_id IS NULL;
 =======
-                        SELECT q.id, c.message, c.submission_time, c.edited_count 
-                        FROM question q
-                        JOIN comment c ON q.id = c.question_id
-                        WHERE q.id = {question_id} AND c.answer_id IS NULL;
+                        SELECT question.id, comment.message, comment.submission_time, comment.edited_count 
+                        FROM question
+                        JOIN comment  ON question.id = comment.question_id
+                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;
                        """)
     question_comments = cursor.fetchall()
     return question_comments
