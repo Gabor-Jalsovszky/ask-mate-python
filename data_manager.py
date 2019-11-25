@@ -58,13 +58,7 @@ def get_question_comments(cursor, question_id):
                         SELECT question.id, comment.message, comment.submission_time, comment.edited_count 
                         FROM question
                         JOIN comment ON question.id = comment.question_id
-                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;
-=======
-                        SELECT question.id, comment.message, comment.submission_time, comment.edited_count 
-                        FROM question
-                        JOIN comment  ON question.id = comment.question_id
-                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;
-                       """)
+                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;""")
     question_comments = cursor.fetchall()
     return question_comments
 
@@ -75,13 +69,7 @@ def get_answer_comments(cursor, question_id):
                         SELECT answer.id, comment.message, comment.submission_time, comment.edited_count 
                         FROM answer 
                         JOIN comment ON answer.id = comment.question_id
-                        WHERE answer.question_id = {question_id};
-=======
-                        SELECT answer.id, comment.message, comment.submission_time, comment.edited_count 
-                        FROM answer 
-                        JOIN comment ON answer.id = comment.answer_id
-                        WHERE answer.question_id = {question_id};
-                       """)
+                        WHERE answer.question_id = {question_id};""")
     question_comments = cursor.fetchall()
     return question_comments
 
