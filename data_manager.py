@@ -1,5 +1,6 @@
 import connection
 
+
 @connection.connection_handler
 def get_data(cursor, data_table, id='', question_id='', answer_id=''):
     cursor.execute(f"""
@@ -40,35 +41,35 @@ def add_new_answer(cursor, new_user_answer, question_id):
 def post_comment(cursor, new_comment, question_id, answer_id):
     cursor.execute("""
             INSERT INTO comment (question_id, answer_id, message)
-            VALUES (%s, %s, %s)""", (question_id, answer_id, new_comment['comment']))
+            VALUES (%s, %s, %s, CURRENT_TIMESTAMP (0))""", (question_id, answer_id, new_comment['comment']))
 
 
 @connection.connection_handler
 def post_question_comment(cursor, new_comment, question_id):
     cursor.execute("""
             INSERT INTO comment (question_id, message)
-            VALUES (%s, %s)""", (question_id, new_comment['comment']))
+            VALUES (%s, %s, CURRENT_TIMESTAMP (0))""", (question_id, new_comment['comment']))
 
 
 @connection.connection_handler
 def get_question_comments(cursor, question_id):
     cursor.execute(f"""
-                        SELECT q.id, c.message, c.submission_time, c.edited_count 
-                        FROM question q
-                        JOIN comment c ON q.id = c.question_id
-                        WHERE q.id = {question_id};
+                        SELECT question.id, comment.message, comment.submission_time, comment.edited_count 
+                        FROM question
+                        JOIN comment ON question.id = comment.question_id
+                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;
                        """)
     question_comments = cursor.fetchall()
     return question_comments
 
 
 @connection.connection_handler
-def get_answer_comments(cursor, id):
+def get_answer_comments(cursor, question_id):
     cursor.execute(f"""
-                        SELECT a.id, c.message, c.submission_time, c.edited_count 
-                        FROM answer a
-                        JOIN comment c ON a.id = c.question_id
-                        WHERE q.id = {question_id};
+                        SELECT answer.id, comment.message, comment.submission_time, comment.edited_count 
+                        FROM answer 
+                        JOIN comment ON answer.id = comment.question_id
+                        WHERE answer.question_id = {question_id};
                        """)
     question_comments = cursor.fetchall()
     return question_comments
