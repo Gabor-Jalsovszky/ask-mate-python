@@ -32,8 +32,10 @@ def route_question(number_of_question):
     question = data_manager.get_data('question', number_of_question)
     answers = data_manager.get_data('answer', question_id=number_of_question)
     question_comments = data_manager.get_question_comments(number_of_question)
+    answer_comments = data_manager.get_answer_comments(number_of_question)
     return render_template("question-only.html", number_of_question=int(number_of_question),
-                           question=question, answers=answers, question_comments=question_comments)
+                           question=question, answers=answers,
+                           question_comments=question_comments, answer_comments=answer_comments)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

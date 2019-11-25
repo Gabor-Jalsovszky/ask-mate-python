@@ -56,19 +56,19 @@ def get_question_comments(cursor, question_id):
                         SELECT q.id, c.message, c.submission_time, c.edited_count 
                         FROM question q
                         JOIN comment c ON q.id = c.question_id
-                        WHERE q.id = {question_id};
+                        WHERE q.id = {question_id} AND c.answer_id IS NULL;
                        """)
     question_comments = cursor.fetchall()
     return question_comments
 
 
 @connection.connection_handler
-def get_answer_comments(cursor, id):
+def get_answer_comments(cursor, question_id):
     cursor.execute(f"""
                         SELECT a.id, c.message, c.submission_time, c.edited_count 
                         FROM answer a
-                        JOIN comment c ON a.id = c.question_id
-                        WHERE q.id = {question_id};
+                        JOIN comment c ON a.id = c.answer_id
+                        WHERE a.id = {question_id};
                        """)
     question_comments = cursor.fetchall()
     return question_comments
