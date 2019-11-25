@@ -68,7 +68,7 @@ def get_answer_comments(cursor, question_id):
                         SELECT a.id, c.message, c.submission_time, c.edited_count 
                         FROM answer a
                         JOIN comment c ON a.id = c.answer_id
-                        WHERE a.id = {question_id};
+                        WHERE a.question_id = {question_id};
                        """)
     question_comments = cursor.fetchall()
     return question_comments
