@@ -60,7 +60,6 @@ def get_all_questions(cursor, order):
         return questions
 
 
-
 @connection.connection_handler
 def add_new_question(cursor, new_user_question):
     cursor.execute("""
