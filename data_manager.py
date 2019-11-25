@@ -1,9 +1,10 @@
 import connection
 
 @connection.connection_handler
-def get_data(cursor, data_table, question_id='', answer_id=''):
+def get_data(cursor, data_table, id='', question_id='', answer_id=''):
     cursor.execute(f"""
-                        SELECT * FROM {data_table}{" WHERE question_id = " + question_id if question_id else ''}
+                        SELECT * FROM {data_table}{" WHERE id = " + id if id else ''}
+                        {" WHERE question_id = " + question_id if question_id else ''}
                         {" AND answer_id = " + answer_id if answer_id else ''};""")
     print(cursor.query)
     data = cursor.fetchall()
@@ -12,45 +13,11 @@ def get_data(cursor, data_table, question_id='', answer_id=''):
 
 @connection.connection_handler
 def sort_questions(cursor, order):
-    if order == 'Ascending_ID':
-        cursor.execute("""
-                        SELECT id, submission_time, view_number, vote_number, title, message, image FROM question;
-                       """)
-    elif order == 'Descending_ID':
-        cursor.execute("""
-                        SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                        ORDER BY id DESC; 
-                        """)
-    elif order == 'Ascending_Question':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY title ASC; 
-                            """)
-    elif order == 'Descending_Question':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY title DESC; 
-                            """)
-    elif order == 'Ascending_description':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY message ASC; 
-                            """)
-    elif order == 'Descending_description':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY message DESC; 
-                            """)
-    elif order == 'Ascending_date':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY submission_time ASC; 
-                            """)
-    elif order == 'Descending_date':
-        cursor.execute("""
-                            SELECT id, submission_time, view_number, vote_number, title, message, image FROM question
-                            ORDER BY submission_time DESC; 
-                            """)
+    cursor.execute(f"""
+                    SELECT id, submission_time, view_number, vote_number, title, message, image
+                    FROM question
+                    {order};
+                   """)
     questions = cursor.fetchall()
     return questions
 
@@ -84,6 +51,26 @@ def post_question_comment(cursor, new_comment, question_id):
             VALUES (%s, %s)""", (question_id, new_comment['comment']))
 
 
+@connection.connection_handler
+def get_question_comments(cursor, question_id):
+    cursor.execute(f"""
+                        SELECT q.id, c.message, c.submission_time, c.edited_count 
+                        FROM question q
+                        JOIN comment c ON q.id = c.question_id
+                        WHERE q.id = {question_id};
+                       """)
+    question_comments = cursor.fetchall()
+    return question_comments
 
 
+@connection.connection_handler
+def get_answer_comments(cursor, id):
+    cursor.execute(f"""
+                        SELECT a.id, c.message, c.submission_time, c.edited_count 
+                        FROM answer a
+                        JOIN comment c ON a.id = c.question_id
+                        WHERE q.id = {question_id};
+                       """)
+    question_comments = cursor.fetchall()
+    return question_comments
 

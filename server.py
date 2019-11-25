@@ -10,10 +10,10 @@ app = Flask(__name__)
 @app.route('/list')
 def route_list():
     order = request.args.get('sort')
-    if order is not None:
+    if order is None:
+        questions = data_manager.sort_questions("ORDER BY id ASC")
+    elif order is not None:
         questions = data_manager.sort_questions(order)
-    else:
-        questions = data_manager.get_data('question')
     return render_template("list.html", questions=questions)
 
 
@@ -30,10 +30,10 @@ def route_add_question():
 @app.route('/question/<number_of_question>')
 def route_question(number_of_question):
     question = data_manager.get_data('question', number_of_question)
-    answers = data_manager.get_data('answer', number_of_question)
-    comments = data_manager.get_data('comment', number_of_question)
+    answers = data_manager.get_data('answer', question_id=number_of_question)
+    question_comments = data_manager.get_question_comments(number_of_question)
     return render_template("question-only.html", number_of_question=int(number_of_question),
-                           question=question, answers=answers, comments=comments)
+                           question=question, answers=answers, question_comments=question_comments)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

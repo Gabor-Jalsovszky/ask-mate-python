@@ -7,36 +7,30 @@
     </head>
     <body>
         <div class="other-page-body">
-        {% for item in questions %}
-            {% if item['id'] == number_of_question %}
+            {% for item in question %}
                 <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
                 <h2 class="h2-text-format">{{ item['message'] }}</h2><br/>
                 <label class="label-format">Comments:</label>
-            {% endif %}
-        {% endfor %}
-            {% for comment in comments %}
-                {% if comment['question_id'] == number_of_question and comment['answer_id'] == None %}
+            {%  endfor %}
+            {% for comment in question_comments %}
                     <h3 class="h3-text-format">{{ comment['message'] }}</h3>
-                {% endif %}
             {% endfor %}
             <a href="/question/{{ number_of_question }}/new-comment">Comment question</a>
             <table>
             {% for item in answers %}
-                {% if item['question_id'] == number_of_question %}
                     <tr>
                         <td class="question-answers-format">{{ item['message'] }}</td>
                     </tr>
-                    {% for comment in comments %}
+                    {#{% for comment in comments %}
                         {% if comment['answer_id'] == item['id'] %}
                             <tr>
                                 <td class="answer-comment-format">{{ comment['message'] }}</td>
                             </tr>
                         {% endif %}
-                    {% endfor %}
+                    {% endfor %}#}
                     <tr>
                         <td><a href="/question/{{ number_of_question }}/{{ item['id'] }}/new-comment">Add comment</a></td>
                     </tr>
-                {% endif %}
             {% endfor %}
             </table>
             <p><a class="add-answer-button" href="/question/{{ number_of_question }}/new-answer">Add your answer</a></p>
