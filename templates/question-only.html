@@ -15,7 +15,7 @@
             {% for comment in question_comments %}
                     <h3 class="h3-text-format">{{ comment['message'] }}</h3>
             {% endfor %}
-            <a href="/question/{{ number_of_question }}/new-comment">Comment question</a>
+            <a href="/question/{{ question_id }}/new-comment">Comment question</a>
             <table>
             {% for item in answers %}
                     <tr>
@@ -27,11 +27,18 @@
                             </tr>
                     {% endfor %}
                     <tr>
-                        <td><a href="/question/{{ number_of_question }}/{{ item['id'] }}/new-comment">Add comment</a></td>
+                        <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>
+                        <td><form action="/question/{{ question_id }}/{{ item['id'] }}">
+                        <button type="submit">Delete answer</button>
+                        </form>
+                        </td>
                     </tr>
             {% endfor %}
             </table>
-            <p><a class="add-answer-button" href="/question/{{ number_of_question }}/new-answer">Add your answer</a></p>
+            <p><a class="add-answer-button" href="/question/{{ question_id }}/new-answer">Add your answer</a></p>
         </div>
+            <form action="/question/{{ question_id }}" method="POST">
+            <button type="submit">Delete Question</button>
+            </form>
     </body>
 </html>

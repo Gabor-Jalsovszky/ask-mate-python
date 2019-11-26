@@ -58,7 +58,8 @@ def get_question_comments(cursor, question_id):
                         SELECT question.id, comment.message, comment.submission_time, comment.edited_count 
                         FROM question
                         JOIN comment ON question.id = comment.question_id
-                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;""")
+                        WHERE question.id = {question_id} AND comment.answer_id IS NULL;
+                        """)
     question_comments = cursor.fetchall()
     return question_comments
 
@@ -68,8 +69,9 @@ def get_answer_comments(cursor, question_id):
     cursor.execute(f"""
                         SELECT answer.id, comment.message, comment.submission_time, comment.edited_count 
                         FROM answer 
-                        JOIN comment ON answer.id = comment.question_id
-                        WHERE answer.question_id = {question_id};""")
+                        JOIN comment ON answer.question_id = comment.question_id
+                        WHERE answer.question_id = {question_id};
+                        """)
     question_comments = cursor.fetchall()
     return question_comments
 
@@ -77,10 +79,20 @@ def get_answer_comments(cursor, question_id):
 @connection.connection_handler
 def delete_question(cursor, question_id):
     cursor.execute(f"""
-                        DELETE FROM question
-                        USING answers
-                        USING comments
-                        WHERE question.id = answer.question_id and question.id = comments.question_id
+                       DELETE FROM comment
+                       WHERE question_id = {question_id};
+                       DELETE FROM answer 
+                       WHERE question_id = {question_id};
+                       DELETE FROM question
+                       WHERE question.id = {question_id};
+                       """)
+
+
+@connection.connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute(f""" 
+                        DELETE FROM comment 
+                        WHERE comment.answer_id = {answer_id};
+                        DELETE FROM answer 
+                        WHERE answer.id = {answer_id};
                         """)
-    questions = cursor.fetchall()
-    return questions

@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, request
 
 import data_manager
 
-
 app = Flask(__name__)
 
 
@@ -27,15 +26,19 @@ def route_add_question():
         return render_template("question.html")
 
 
-@app.route('/question/<number_of_question>')
-def route_question(number_of_question):
-    question = data_manager.get_data('question', number_of_question)
-    answers = data_manager.get_data('answer', question_id=number_of_question)
-    question_comments = data_manager.get_question_comments(number_of_question)
-    answer_comments = data_manager.get_answer_comments(number_of_question)
-    return render_template("question-only.html", number_of_question=int(number_of_question),
-                           question=question, answers=answers,
-                           question_comments=question_comments, answer_comments=answer_comments)
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
+def route_question(question_id):
+    if request.method == 'GET':
+        question = data_manager.get_data('question', question_id)
+        answers = data_manager.get_data('answer', question_id=question_id)
+        question_comments = data_manager.get_question_comments(question_id)
+        answer_comments = data_manager.get_answer_comments(question_id)
+        return render_template("question-only.html", question_id=int(question_id),
+                               question=question, answers=answers,
+                               question_comments=question_comments, answer_comments=answer_comments)
+    elif request.method == 'POST':
+        data_manager.delete_question(question_id)
+        return redirect('/list')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
@@ -56,7 +59,8 @@ def route_new_comment(question_id: int, answer_id: int):
         return redirect('/question/' + question_id)
     questions = data_manager.get_data('question')
     answers = data_manager.get_data('answer')
-    return render_template("comment.html", question_id=int(question_id), answer_id = int(answer_id), questions=questions, answers=answers)
+    return render_template("comment.html", question_id=int(question_id), answer_id=int(answer_id), questions=questions,
+                           answers=answers)
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
@@ -67,6 +71,12 @@ def route_new_question_comment(question_id):
         return redirect('/question/' + question_id)
     questions = data_manager.get_data('question')
     return render_template("comment_question.html", question_id=int(question_id), questions=questions)
+
+
+@app.route('/question/<question_id>/<answer_id>/')
+def route_delete_answer(question_id, answer_id):
+    data_manager.delete_answer(answer_id)
+    return redirect('/question/' + question_id)
 
 
 if __name__ == '__main__':
