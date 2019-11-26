@@ -40,14 +40,14 @@ def add_new_answer(cursor, new_user_answer, question_id):
 @connection.connection_handler
 def post_comment(cursor, new_comment, question_id, answer_id):
     cursor.execute("""
-            INSERT INTO comment (question_id, answer_id, message)
+            INSERT INTO comment (question_id, answer_id, message, submission_time)
             VALUES (%s, %s, %s, CURRENT_TIMESTAMP (0))""", (question_id, answer_id, new_comment['comment']))
 
 
 @connection.connection_handler
 def post_question_comment(cursor, new_comment, question_id):
     cursor.execute("""
-            INSERT INTO comment (question_id, message)
+            INSERT INTO comment (question_id, message, submission_time)
             VALUES (%s, %s, CURRENT_TIMESTAMP (0))""", (question_id, new_comment['comment']))
 
 
@@ -73,3 +73,14 @@ def get_answer_comments(cursor, question_id):
     question_comments = cursor.fetchall()
     return question_comments
 
+
+@connection.connection_handler
+def delete_question(cursor, question_id):
+    cursor.execute(f"""
+                        DELETE FROM question
+                        USING answers
+                        USING comments
+                        WHERE question.id = answer.question_id and question.id = comments.question_id
+                        """)
+    questions = cursor.fetchall()
+    return questions
