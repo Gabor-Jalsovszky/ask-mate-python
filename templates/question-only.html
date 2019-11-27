@@ -27,10 +27,11 @@
                 <tr>
                 <td class="question-answers-format">{{ item['message'] }}</td>
                 <td class="question-answers-format">Answer Votes: {{ item['vote_number'] }}</td>
-                    <form action="/question/{{ question_id }}/{{ item['vote_number'] }}">
+                    <td><form action="/question/{{ question_id }}/{{ item['vote_number'] }}">
                     <button type="submit">LIKE</button>
                     <button type="submit">DISLIKE</button>
                     </form>
+                    </td>
                 </tr>
                     {% for comment in answer_comments %}
                         {% if item['id'] == comment['answer_id'] %}
@@ -39,14 +40,14 @@
                             </tr>
                         {% endif %}
                     {% endfor %}
-                    <tr>
-                        <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>
-                        <td>
-                        <form action="/question/{{ question_id }}/{{ item['id'] }}">
-                        <button type="submit">Delete answer</button>
-                        </form>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>
+                    <td>
+                    <form action="/question/{{ question_id }}/{{ item['id'] }}">
+                    <button type="submit">Delete answer</button>
+                    </form>
+                    </td>
+                </tr>
             {% endfor %}
             </table>
             <p><a class="add-answer-button" href="/question/{{ question_id }}/new-answer">Add your answer</a></p>
