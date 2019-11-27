@@ -33,9 +33,11 @@
                     </form>
                 </tr>
                     {% for comment in answer_comments %}
+                        {% if item['id'] == comment['answer_id'] %}
                             <tr>
                                 <td class="answer-comment-format">{{ comment['message'] }}</td>
                             </tr>
+                        {% endif %}
                     {% endfor %}
                     <tr>
                         <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>

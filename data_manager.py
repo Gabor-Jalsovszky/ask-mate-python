@@ -66,12 +66,12 @@ def get_question_comments(cursor, question_id):
 
 
 @connection.connection_handler
-def get_answer_comments(cursor, answer_id):
+def get_answer_comments(cursor, question_id):
     cursor.execute(f"""
-                        SELECT answer.id, comment.message, comment.submission_time, comment.edited_count 
-                        FROM answer 
-                        JOIN comment ON answer.id = comment.answer_id
-                        WHERE answer.id = comment.answer_id;
+
+                        SELECT answer_id, comment.message, comment.submission_time, comment.edited_count 
+                        FROM comment
+                        WHERE question_id = {question_id} AND comment.answer_id IS NOT NULL;
                         """)
     answer_comments = cursor.fetchall()
     return answer_comments
