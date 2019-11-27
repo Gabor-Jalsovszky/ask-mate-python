@@ -1,4 +1,5 @@
 import connection
+import bcrypt
 
 
 @connection.connection_handler
@@ -84,3 +85,31 @@ def delete_question(cursor, question_id):
                         """)
     questions = cursor.fetchall()
     return questions
+
+
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
+
+
+@connection.connection_handler
+def add_new_user(cursor, user_name, password):
+    hashed_password = hash_password(password)
+    cursor.execute("""
+            INSERT INTO users (name, password)
+            VALUES (%s, %s);""", (user_name, hashed_password))
+
+
+@connection.connection_handler
+def verify_user(cursor, user_name, password):
+    cursor.execute(""" 
+                    SELECT password FROM users 
+                    WHERE name = %(user_name)s;""", {'user_name': user_name})
+    saved_password = cursor.fetchone()['password']
+    is_matching = verify_password(password, saved_password)
+    return is_matching
