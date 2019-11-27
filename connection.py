@@ -2,6 +2,7 @@ import os
 import psycopg2
 import psycopg2.extras
 
+
 def get_connection_string():
     user_name = os.environ.get('PSQL_USER_NAME')
     password = os.environ.get('PSQL_PASSWORD')
@@ -20,6 +21,7 @@ def get_connection_string():
     else:
         raise KeyError('Some necessary environment variable(s) are not defined')
 
+
 def open_database():
     try:
         connection_string = get_connection_string()
@@ -29,6 +31,7 @@ def open_database():
         print('Database connection problem')
         raise exception
     return connection
+
 
 def connection_handler(function):
     def wrapper(*args, **kwargs):

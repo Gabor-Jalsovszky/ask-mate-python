@@ -76,7 +76,13 @@ def route_new_question_comment(question_id):
 @app.route('/question/<question_id>/<answer_id>/')
 def route_delete_answer(question_id, answer_id):
     data_manager.delete_answer(answer_id)
-    return redirect('/question/' + question_id)
+    return render_template('/question/' + question_id)
+
+
+@app.route('/question/<question_id>/')
+def route_vote(question_id):
+    data_manager.vote(question_id)
+    return render_template('/question'+question_id)
 
 
 if __name__ == '__main__':

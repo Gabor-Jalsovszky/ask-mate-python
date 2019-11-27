@@ -65,15 +65,15 @@ def get_question_comments(cursor, question_id):
 
 
 @connection.connection_handler
-def get_answer_comments(cursor, question_id):
+def get_answer_comments(cursor, answer_id):
     cursor.execute(f"""
                         SELECT answer.id, comment.message, comment.submission_time, comment.edited_count 
                         FROM answer 
-                        JOIN comment ON answer.question_id = comment.question_id
-                        WHERE answer.question_id = {question_id};
+                        JOIN comment ON answer.id = comment.answer_id
+                        WHERE answer.id = comment.answer_id;
                         """)
-    question_comments = cursor.fetchall()
-    return question_comments
+    answer_comments = cursor.fetchall()
+    return answer_comments
 
 
 @connection.connection_handler
@@ -95,4 +95,13 @@ def delete_answer(cursor, answer_id):
                         WHERE comment.answer_id = {answer_id};
                         DELETE FROM answer 
                         WHERE answer.id = {answer_id};
+                        """)
+
+
+@connection.connection_handler
+def vote(cursor, data_table, up_or_down, question_or_answer_id):
+    cursor.execute(f"""
+                        UPDATE {data_table} 
+                        SET vote_number = vote_number + {up_or_down}
+                        WHERE question_id = {}
                         """)

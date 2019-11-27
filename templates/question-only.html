@@ -10,17 +10,28 @@
             {% for item in question %}
                 <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
                 <h2 class="h2-text-format">{{ item['message'] }}</h2><br/>
+                <h3 class="h3-text-format">Question Votes: {{ item['vote_number'] }}
+                    <form action="/question/{{ question_id }}/{{ item['vote_number'] }}">
+                    <button value="1" type="submit">LIKE</button>
+                    <button value="-1" type="submit">DISLIKE</button>
+                    </form>
+                </h3>
                 <label class="label-format">Comments:</label>
             {%  endfor %}
             {% for comment in question_comments %}
-                    <h3 class="h3-text-format">{{ comment['message'] }}</h3>
+                <h4 class="h3-text-format">{{ comment['message'] }}</h4>
             {% endfor %}
             <a href="/question/{{ question_id }}/new-comment">Comment question</a>
             <table>
             {% for item in answers %}
-                    <tr>
-                        <td class="question-answers-format">{{ item['message'] }}</td>
-                    </tr>
+                <tr>
+                <td class="question-answers-format">{{ item['message'] }}</td>
+                <td class="question-answers-format">Answer Votes: {{ item['vote_number'] }}</td>
+                    <form action="/question/{{ question_id }}/{{ item['vote_number'] }}">
+                    <button type="submit">LIKE</button>
+                    <button type="submit">DISLIKE</button>
+                    </form>
+                </tr>
                     {% for comment in answer_comments %}
                             <tr>
                                 <td class="answer-comment-format">{{ comment['message'] }}</td>
@@ -28,7 +39,8 @@
                     {% endfor %}
                     <tr>
                         <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>
-                        <td><form action="/question/{{ question_id }}/{{ item['id'] }}">
+                        <td>
+                        <form action="/question/{{ question_id }}/{{ item['id'] }}">
                         <button type="submit">Delete answer</button>
                         </form>
                         </td>
