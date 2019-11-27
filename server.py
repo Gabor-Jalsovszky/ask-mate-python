@@ -73,6 +73,31 @@ def route_new_question_comment(question_id):
     return render_template("comment_question.html", question_id=int(question_id), questions=questions)
 
 
+@app.route('/add-new-user', methods=['GET', 'POST'])
+def add_new_user():
+    if request.method == 'GET':
+        return render_template('register.html')
+    elif request.method == 'POST':
+        user_data = request.form
+        data_manager.add_new_user(user_data['user_name'], user_data['password'])
+        return redirect('/list')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def verify_user():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        user_data = request.form
+        valid = data_manager.verify_user(user_data['user_name'], user_data['password'])
+        if valid is True:
+            print('True')
+            return redirect('/list')
+        elif valid is False:
+            print('False')
+            return redirect('login')
+
+
 @app.route('/question/<question_id>/<answer_id>/')
 def route_delete_answer(question_id, answer_id):
     data_manager.delete_answer(answer_id)

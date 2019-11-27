@@ -15,6 +15,10 @@ ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS pk_ques
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_question_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.tag DROP CONSTRAINT IF EXISTS pk_tag_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_tag_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.question DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.answer DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.comment DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+
 
 DROP TABLE IF EXISTS public.question;
 DROP SEQUENCE IF EXISTS public.question_id_seq;
@@ -25,7 +29,8 @@ CREATE TABLE question (
     vote_number integer,
     title text,
     message text,
-    image text
+    image text,
+    user_id integer
 );
 
 DROP TABLE IF EXISTS public.answer;
@@ -36,7 +41,8 @@ CREATE TABLE answer (
     vote_number integer,
     question_id integer,
     message text,
-    image text
+    image text,
+    user_id integer
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -47,7 +53,8 @@ CREATE TABLE comment (
     answer_id integer,
     message text,
     submission_time timestamp without time zone,
-    edited_count integer
+    edited_count integer,
+    user_id integer
 );
 
 
@@ -62,6 +69,17 @@ DROP SEQUENCE IF EXISTS public.tag_id_seq;
 CREATE TABLE tag (
     id serial NOT NULL,
     name text
+);
+
+DROP TABLE IF EXISTS public.users;
+DROP SEQUENCE IF EXISTS public.users_seq;
+create table users
+(
+	id serial
+		constraint users_pk
+			primary key,
+	name text NOT NULL,
+	password text
 );
 
 
@@ -95,33 +113,42 @@ ALTER TABLE ONLY comment
 ALTER TABLE ONLY question_tag
     ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id);
 
-INSERT INTO question VALUES (0, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL);
-INSERT INTO question VALUES (1, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
+ALTER TABLE ONLY question
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
-I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
+ALTER TABLE ONLY answer
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
-BUT in my theme i also using jquery via webpack so the loading order is now following:
+ALTER TABLE ONLY comment
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
-jquery
-booklet
-app.js (bundled file with webpack, including jquery)', 'images/image1.png');
-INSERT INTO question VALUES (2, '2017-05-01 10:41:00', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
-', NULL);
-SELECT pg_catalog.setval('question_id_seq', 2, true);
-
-INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1, 'You need to use brackets: my_list = []', NULL);
-INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg');
-SELECT pg_catalog.setval('answer_id_seq', 2, true);
-
-INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00');
-INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
-SELECT pg_catalog.setval('comment_id_seq', 2, true);
-
-INSERT INTO tag VALUES (1, 'python');
-INSERT INTO tag VALUES (2, 'sql');
-INSERT INTO tag VALUES (3, 'css');
+INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image) VALUES (0, '2017-04-28 08:29:00.000000', 29, 7, 'Who is your favourite mentor at Codecool?', 'Who was the most helpful and friendly? Who has the most hardskills?', null);
+INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image) VALUES (6, '2019-11-15 08:00:39.000000', null, null, 'I have a database with all the countries in it. I need every country which starts with the letter ''E''.', 'Which should I use?
+SELECT name FROM countries
+WHERE name LIKE ''E_'';
+or rather
+SELECT name FROM countries
+WHERE name LIKE ''E%'';
+?', null);
+INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image) VALUES (7, '2019-11-15 09:04:51.000000', null, null, 'What is the difference between the SCRUM Master and the Product Owner?', 'Could someone please specify the differences between their roles?', null);
+INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image) VALUES (8, '2019-11-15 09:23:56.000000', null, null, 'How long does it take to climb the Mt. Everest?', 'Can you guys give me an estimation?', null);
+SELECT pg_catalog.setval('question_id_seq', 8, true);
+INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image) VALUES (16, '2019-11-15 00:58:59.000000', null, 0, 'Gábor and Rudi from the green room are awesome!', null);
+INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image) VALUES (18, '2019-11-15 01:02:56.000000', null, 0, 'One of the Terray brothers helped me a lot once, but as I can''t tell them apart, I don''t know which one :(', null);
+INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image) VALUES (17, '2019-11-15 01:00:13.000000', null, 0, 'I enjoyed being in the white room with Árpi and Laci.', null);
+INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image) VALUES (19, '2019-11-15 08:57:15.000000', null, 6, 'You should use the second one.
+SELECT name FROM countries
+WHERE name LIKE ''E%'';', null);
+INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image) VALUES (20, '2019-11-15 09:24:20.000000', null, 8, 'I would get there in 2 days.', null);
+INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image) VALUES (21, '2019-11-15 09:24:35.000000', null, 8, 'A month, if you are properly trained.', null);
+SELECT pg_catalog.setval('answer_id_seq', 21, true);
+INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count) VALUES (32, 0, 16, 'Do you say that only because your answer is in the presentation?', null, null);
+INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count) VALUES (33, 6, null, 'The second one.', null, null);
+INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count) VALUES (34, 6, 19, 'Thank you, it is working.', null, null);
+INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count) VALUES (35, 8, null, 'Could you please specify? From where do you start? Which route do you take? What''s your training level?', null, null);
+INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count) VALUES (36, 8, 21, '1 day.', null, null);
+SELECT pg_catalog.setval('comment_id_seq', 36, true);
+INSERT INTO public.tag (id, name) VALUES (1, 'python');
+INSERT INTO public.tag (id, name) VALUES (2, 'sql');
+INSERT INTO public.tag (id, name) VALUES (3, 'css');
 SELECT pg_catalog.setval('tag_id_seq', 3, true);
-
-INSERT INTO question_tag VALUES (0, 1);
-INSERT INTO question_tag VALUES (1, 3);
-INSERT INTO question_tag VALUES (2, 3);
