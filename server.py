@@ -101,13 +101,21 @@ def verify_user():
 @app.route('/question/<question_id>/<answer_id>/')
 def route_delete_answer(question_id, answer_id):
     data_manager.delete_answer(answer_id)
-    return render_template('/question/' + question_id)
+    return redirect('/question/' + question_id)
 
 
-@app.route('/question/<question_id>/')
+@app.route('/question/<question_id>/vote', methods=['POST'])
 def route_vote(question_id):
-    data_manager.vote(question_id)
-    return render_template('/question'+question_id)
+    up_or_down = request.form
+    data_manager.vote(question_id, int(up_or_down['up_or_down']))
+    return redirect('/question/'+question_id)
+
+
+@app.route('/question/<question_id>/<answer_id>/vote', methods=['POST'])
+def route_vote_answer(question_id, answer_id):
+    up_or_down = request.form
+    data_manager.vote_answer(answer_id, int(up_or_down['up_or_down']))
+    return redirect('/question/'+question_id)
 
 
 if __name__ == '__main__':

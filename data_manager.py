@@ -27,15 +27,15 @@ def sort_questions(cursor, order):
 @connection.connection_handler
 def add_new_question(cursor, new_user_question):
     cursor.execute("""
-    INSERT INTO question(title, message, submission_time)
-    VALUES (%s, %s, CURRENT_TIMESTAMP(0))""", (new_user_question['question_title'], new_user_question['question']))
+    INSERT INTO question(title, message, submission_time, vote_number)
+    VALUES (%s, %s, CURRENT_TIMESTAMP(0), 0)""", (new_user_question['question_title'], new_user_question['question']))
 
 
 @connection.connection_handler
 def add_new_answer(cursor, new_user_answer, question_id):
     cursor.execute("""
-        INSERT INTO answer (question_id, message, submission_time)
-        VALUES (%s, %s, CURRENT_TIMESTAMP(0))""", (question_id, new_user_answer['answer']))
+        INSERT INTO answer (question_id, message, submission_time, vote_number)
+        VALUES (%s, %s, CURRENT_TIMESTAMP(0), 0)""", (question_id, new_user_answer['answer']))
 
 
 @connection.connection_handler
@@ -128,9 +128,18 @@ def delete_answer(cursor, answer_id):
 
 
 @connection.connection_handler
-def vote(cursor, data_table, up_or_down, question_or_answer_id):
+def vote(cursor, question_id, up_or_down):
     cursor.execute(f"""
-                        UPDATE {data_table} 
+                        UPDATE question 
                         SET vote_number = vote_number + {up_or_down}
-                        WHERE question_id = question_id
+                        WHERE question.id = {question_id}
+                        """)
+
+
+@connection.connection_handler
+def vote_answer(cursor, answer_id, up_or_down):
+    cursor.execute(f"""
+                        UPDATE answer
+                        SET vote_number = vote_number + {up_or_down}
+                        WHERE answer.id = {answer_id}
                         """)
