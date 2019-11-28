@@ -7,7 +7,9 @@ def get_data(cursor, data_table, id='', question_id='', answer_id=''):
     cursor.execute(f"""
                         SELECT * FROM {data_table}{" WHERE id = " + id if id else ''}
                         {" WHERE question_id = " + question_id if question_id else ''}
-                        {" AND answer_id = " + answer_id if answer_id else ''};""")
+                        {" AND answer_id = " + answer_id if answer_id else ''}
+                        ORDER BY id;
+                        """)
     print(cursor.query)
     data = cursor.fetchall()
     return data
