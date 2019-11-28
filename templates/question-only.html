@@ -29,7 +29,7 @@
                 <td class="question-answers-format">{{ item['message'] }}</td>
                 <td class="question-answers-format">Answer Votes: {{ item['vote_number'] }}</td>
                 <td>
-                    <form action="/question/{{ question_id }}/{{ item['id']}}/vote" method="POST">
+                    <form action="/question/{{ question_id }}/{{ item['id'] }}/vote" method="POST">
                         <button name="up_or_down" value="+1" type="submit">LIKE</button>
                     </form>
                     <form action="/question/{{ question_id }}/{{ item['id'] }}/vote" method="POST">
