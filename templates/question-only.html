@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Askmate</title>
-        <link rel="stylesheet" href="../static/style.css">
-    </head>
-    <body>
-        <div class="other-page-body">
-            {% for item in question %}
-                <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
-                <h2 class="h2-text-format">{{ item['message'] }}</h2><br/>
-                <h3 class="h3-text-format">Question Votes: {{ item['vote_number'] }}
-                    <form action="/question/{{ question_id }}/{{ item['vote_number'] }}">
-                    <button value="1" type="submit">LIKE</button>
-                    <button value="-1" type="submit">DISLIKE</button>
-                    </form>
-                </h3>
-                <label class="label-format">Comments:</label>
-            {%  endfor %}
-            {% for comment in question_comments %}
-                <h4 class="h3-text-format">{{ comment['message'] }}</h4>
-            {% endfor %}
-            <a href="/question/{{ question_id }}/new-comment">Comment question</a>
-            <table>
-            {% for item in answers %}
-                <tr>
+<head>
+    <meta charset="UTF-8">
+    <title>Askmate</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<div class="other-page-body">
+    {% for item in question %}
+        <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
+        <h2 class="h2-text-format">{{ item['message'] }}</h2><br/>
+        <h3 class="h3-text-format">Question Votes: {{ item['vote_number'] }}</h3>
+        <form action="/question/{{ question_id }}/vote" method="POST">
+            <button name="up_or_down" value="+1" type="submit">LIKE</button>
+        </form>
+        <form action="/question/{{ question_id }}/vote" method="POST">
+            <button name="up_or_down" value="-1" type="submit">DISLIKE</button>
+        </form>
+        <label class="label-format">Comments:</label>
+    {% endfor %}
+    {% for comment in question_comments %}
+        <h4 class="h3-text-format">{{ comment['message'] }}</h4>
+    {% endfor %}
+    <a href="/question/{{ question_id }}/new-comment">Comment question</a>
+    <table>
+        {% for item in answers %}
+            <tr>
                 <td class="question-answers-format">{{ item['message'] }}</td>
                 <td class="question-answers-format">Answer Votes: {{ item['vote_number'] }}</td>
-                    <td><form action="/question/{{ question_id }}/{{ item['vote_number'] }}">
-                    <button type="submit">LIKE</button>
-                    <button type="submit">DISLIKE</button>
+                <td>
+                    <form action="/question/{{ question_id }}/{{ item['id']}}/vote" method="POST">
+                        <button name="up_or_down" value="+1" type="submit">LIKE</button>
                     </form>
-                    </td>
-                </tr>
-                    {% for comment in answer_comments %}
-                        {% if item['id'] == comment['answer_id'] %}
-                            <tr>
-                                <td class="answer-comment-format">{{ comment['message'] }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                <tr>
-                    <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>
-                    <td>
-                    <form action="/question/{{ question_id }}/{{ item['id'] }}">
-                    <button type="submit">Delete answer</button>
+                    <form action="/question/{{ question_id }}/{{ item['id'] }}/vote" method="POST">
+                        <button name="up_or_down" value="-1" type="submit">DISLIKE</button>
                     </form>
-                    </td>
-                </tr>
+                </td>
+            </tr>
+            {% for comment in answer_comments %}
+                {% if item['id'] == comment['answer_id'] %}
+                    <tr>
+                        <td class="answer-comment-format">{{ comment['message'] }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
-            </table>
-            <p><a class="add-answer-button" href="/question/{{ question_id }}/new-answer">Add your answer</a></p>
-        </div>
-            <form action="/question/{{ question_id }}" method="POST">
-            <button type="submit">Delete Question</button>
-            </form>
-    </body>
+            <tr>
+                <td><a href="/question/{{ question_id }}/{{ item['id'] }}/new-comment">Add comment</a></td>
+                <td>
+                    <form action="/question/{{ question_id }}/{{ item['id'] }}/">
+                        <button type="submit">Delete answer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p><a class="add-answer-button" href="/question/{{ question_id }}/new-answer">Add your answer</a></p>
+</div>
+<form action="/question/{{ question_id }}" method="POST">
+    <button type="submit">Delete Question</button>
+</form>
+</body>
 </html>

@@ -127,9 +127,18 @@ def delete_answer(cursor, answer_id):
 
 
 @connection.connection_handler
-def vote(cursor, data_table, up_or_down, question_or_answer_id):
+def vote(cursor, question_id, up_or_down):
     cursor.execute(f"""
-                        UPDATE {data_table} 
+                        UPDATE question 
                         SET vote_number = vote_number + {up_or_down}
-                        WHERE question_id = question_id
+                        WHERE question.id = {question_id}
+                        """)
+
+
+@connection.connection_handler
+def vote_answer(cursor, answer_id, up_or_down):
+    cursor.execute(f"""
+                        UPDATE answer
+                        SET vote_number = vote_number + {up_or_down}
+                        WHERE answer.id = {answer_id}
                         """)
