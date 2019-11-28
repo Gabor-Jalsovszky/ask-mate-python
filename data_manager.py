@@ -27,15 +27,15 @@ def sort_questions(cursor, order):
 @connection.connection_handler
 def add_new_question(cursor, new_user_question):
     cursor.execute("""
-    INSERT INTO question(title, message, submission_time)
-    VALUES (%s, %s, CURRENT_TIMESTAMP(0))""", (new_user_question['question_title'], new_user_question['question']))
+    INSERT INTO question(title, message, submission_time, vote_number)
+    VALUES (%s, %s, CURRENT_TIMESTAMP(0), 0)""", (new_user_question['question_title'], new_user_question['question']))
 
 
 @connection.connection_handler
 def add_new_answer(cursor, new_user_answer, question_id):
     cursor.execute("""
-        INSERT INTO answer (question_id, message, submission_time)
-        VALUES (%s, %s, CURRENT_TIMESTAMP(0))""", (question_id, new_user_answer['answer']))
+        INSERT INTO answer (question_id, message, submission_time, vote_number)
+        VALUES (%s, %s, CURRENT_TIMESTAMP(0), 0)""", (question_id, new_user_answer['answer']))
 
 
 @connection.connection_handler
@@ -68,7 +68,6 @@ def get_question_comments(cursor, question_id):
 @connection.connection_handler
 def get_answer_comments(cursor, question_id):
     cursor.execute(f"""
-
                         SELECT answer_id, comment.message, comment.submission_time, comment.edited_count 
                         FROM comment
                         WHERE question_id = {question_id} AND comment.answer_id IS NOT NULL;

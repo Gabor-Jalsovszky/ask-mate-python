@@ -91,11 +91,9 @@ def verify_user():
         user_data = request.form
         valid = data_manager.verify_user(user_data['user_name'], user_data['password'])
         if valid is True:
-            print('True')
             return redirect('/list')
         elif valid is False:
-            print('False')
-            return redirect('login')
+            return redirect('/login')
 
 
 @app.route('/question/<question_id>/<answer_id>/')
