@@ -62,16 +62,14 @@ body {
 }
 
 .h1-text-format {
-    text-decoration-line: underline;
     font-size: 40px;
     color: lightblue;
     text-align: center;
 }
 
 .h2-text-format {
-    background-color: lightblue;
     font-size: 30px;
-    color: darkblue;
+    color: lightblue;
     text-align: center;
 }
 

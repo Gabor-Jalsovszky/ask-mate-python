@@ -6,6 +6,11 @@
         <link rel="stylesheet" href="static/style.css">
     </head>
     <body>
+    <form action="/logout" method="GET">
+        <button name="logout" type="submit">LOGOUT</button></form>
+    {% if is_admin == True %}
+        <a href="/list-users">List users</a>
+    {% endif %}
         <div class="main-page-body">
             <h1 class="main-page-title-format">Ask-Mate!</h1>
             <table>

@@ -10,7 +10,6 @@ def get_data(cursor, data_table, id='', question_id='', answer_id=''):
                         {" AND answer_id = " + answer_id if answer_id else ''}
                         ORDER BY id;
                         """)
-    print(cursor.query)
     data = cursor.fetchall()
     return data
 
@@ -110,12 +109,15 @@ def add_new_user(cursor, user_name, password):
 
 @connection.connection_handler
 def verify_user(cursor, user_name, password):
-    cursor.execute(""" 
+    try:
+        cursor.execute(""" 
                     SELECT password FROM users 
                     WHERE name = %(user_name)s;""", {'user_name': user_name})
-    saved_password = cursor.fetchone()['password']
-    is_matching = verify_password(password, saved_password)
-    return is_matching
+        saved_password = cursor.fetchone()['password']
+        is_matching = verify_password(password, saved_password)
+        return is_matching
+    except TypeError:
+        return False
 
 
 @connection.connection_handler
@@ -144,3 +146,13 @@ def vote_answer(cursor, answer_id, up_or_down):
                         SET vote_number = vote_number + {up_or_down}
                         WHERE answer.id = {answer_id}
                         """)
+
+
+@connection.connection_handler
+def get_users(cursor):
+    cursor.execute("""
+                        SELECT id, name, password 
+                        FROM users;
+                        """)
+    user_data = cursor.fetchall()
+    return user_data
