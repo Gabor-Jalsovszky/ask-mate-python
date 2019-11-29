@@ -36,13 +36,8 @@ body {
     width: 80%;
     margin: 0px auto;
     border-collapse: collapse;
-
 }
 
-
-.list-question_only_table {
-
-}
 .th-format {
     border: black solid 5px;
     font-size: 25px;
@@ -92,6 +87,7 @@ body {
     color: lightblue;
 }
 
+
 .question-answers-format {
     font-size: 30px;
     color: lightblue;
@@ -105,11 +101,13 @@ body {
     padding-left: 145px;
 }
 
-.add-answer-button{
-    font-size: 30px;
-    color: lightblue;
-    text-align: left;
+
+.like-dislike-buttons{
+    font-size: 11px;
+    color: pink;
+    text-align: justify;
 }
+
 
 .new-question-page-body {
     font-family: "Ubuntu Light";
