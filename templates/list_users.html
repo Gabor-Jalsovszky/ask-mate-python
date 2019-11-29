@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Askmate</title>
+</head>
+<body>
+<table>
+<tr>
+    <th>User ID</th>
+    <th>Username</th>
+    <th>Hashed password</th></br>
+</tr>
+{% for item in user_data %}
+    <tr>
+        <td>{{ item['id'] }}</td>
+        <td>{{ item['name'] }}</td>
+        <td>{{ item['password'] }}</td>
+    </tr>
+{% endfor %}
+</table>
+<a href="/list">Back</a>
+</body>
+</html>

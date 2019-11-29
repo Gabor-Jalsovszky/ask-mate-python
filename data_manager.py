@@ -7,8 +7,9 @@ def get_data(cursor, data_table, id='', question_id='', answer_id=''):
     cursor.execute(f"""
                         SELECT * FROM {data_table}{" WHERE id = " + id if id else ''}
                         {" WHERE question_id = " + question_id if question_id else ''}
-                        {" AND answer_id = " + answer_id if answer_id else ''};""")
-    print(cursor.query)
+                        {" AND answer_id = " + answer_id if answer_id else ''}
+                        ORDER BY id;
+                        """)
     data = cursor.fetchall()
     return data
 
@@ -68,7 +69,6 @@ def get_question_comments(cursor, question_id):
 @connection.connection_handler
 def get_answer_comments(cursor, question_id):
     cursor.execute(f"""
-
                         SELECT answer_id, comment.message, comment.submission_time, comment.edited_count 
                         FROM comment
                         WHERE question_id = {question_id} AND comment.answer_id IS NOT NULL;
@@ -109,12 +109,15 @@ def add_new_user(cursor, user_name, password):
 
 @connection.connection_handler
 def verify_user(cursor, user_name, password):
-    cursor.execute(""" 
+    try:
+        cursor.execute(""" 
                     SELECT password FROM users 
                     WHERE name = %(user_name)s;""", {'user_name': user_name})
-    saved_password = cursor.fetchone()['password']
-    is_matching = verify_password(password, saved_password)
-    return is_matching
+        saved_password = cursor.fetchone()['password']
+        is_matching = verify_password(password, saved_password)
+        return is_matching
+    except TypeError:
+        return False
 
 
 @connection.connection_handler
@@ -143,3 +146,13 @@ def vote_answer(cursor, answer_id, up_or_down):
                         SET vote_number = vote_number + {up_or_down}
                         WHERE answer.id = {answer_id}
                         """)
+
+
+@connection.connection_handler
+def get_users(cursor):
+    cursor.execute("""
+                        SELECT id, name, password 
+                        FROM users;
+                        """)
+    user_data = cursor.fetchall()
+    return user_data

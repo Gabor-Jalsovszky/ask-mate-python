@@ -10,7 +10,7 @@
     {% for item in question %}
         <h1 class="h1-text-format">The question is: {{ item['title'] }}</h1>
         <h2 class="h2-text-format">{{ item['message'] }}</h2><br/>
-        <h3 class="h3-text-format">Question Votes: {{ item['vote_number'] }}</h3>
+        <h3 class="h3-text-format">{{ item['vote_number'] }}</h3>
         <form action="/question/{{ question_id }}/vote" method="POST">
             <button name="up_or_down" value="+1" type="submit">LIKE</button>
         </form>
@@ -27,7 +27,7 @@
         {% for item in answers %}
             <tr>
                 <td class="question-answers-format">{{ item['message'] }}</td>
-                <td class="question-answers-format">Answer Votes: {{ item['vote_number'] }}</td>
+                <td class="question-answers-format">{{ item['vote_number'] }}</td>
                 <td>
                     <form action="/question/{{ question_id }}/{{ item['id'] }}/vote" method="POST">
                         <button name="up_or_down" value="+1" type="submit">LIKE</button>

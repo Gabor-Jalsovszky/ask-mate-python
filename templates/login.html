@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Askmate</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
+    <h1 class="main-page-title-format">Welcome to Ask-mate!</h1>
+    <h2>Please login to proceed.</h2>
     <form action="/login" method="POST">
         <label class="label-format" for="user_name">User name:</label><br><br>
-        <input id="user_name" name="user_name" required size="80"><br><br>
+        <input id="user_name" name="user_name" required><br><br>
         <label class="label-format" for="password">Password:</label><br><br>
-        <textarea id="password" name="password" required rows="10" cols="100"></textarea><br><br>
+        <input type="password" id="password" name="password" required><br><br>
         <button type="submit">Login</button><br><br><br>
     </form>
+    <a href="/add-new-user">New user? Click here to register.</a>
 </body>
 </html>
