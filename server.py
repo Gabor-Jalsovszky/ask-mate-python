@@ -6,38 +6,36 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def verify_user():
     if request.method == 'GET':
         return render_template('login.html')
-    elif request.method == 'POST':
-        user_data = request.form
-        valid = data_manager.verify_user(user_data['user_name'], user_data['password'])
-        if valid is True:
-            session['user_name'] = user_data['user_name']
-            return redirect('/list')
-        elif valid is False:
-            return redirect('/login')
+
+    user_data = request.form
+    valid = data_manager.verify_user(user_data['user_name'], user_data['password'])
+    if valid is True:
+        session['user_name'] = user_data['user_name']
+        return redirect('/list')
+
+    return redirect('/login')
+
 
 
 @app.route('/list')
 def route_list():
-    if 'user_name' in session:
-        user_name = session['user_name']
-        order = request.args.get('sort')
-        if order is None:
-            questions = data_manager.sort_questions("ORDER BY id ASC")
-        elif order is not None:
-            questions = data_manager.sort_questions(order)
-        if user_name == 'Admin':
-            is_admin = True
-        else:
-            is_admin = False
-        return render_template("list.html", is_admin=is_admin, questions=questions)
-    else:
+    if 'user_name' not in session:
         return redirect("/")
+    user_name = session['user_name']
+    order = request.args.get('sort')
+    if order is None:
+        questions = data_manager.sort_questions("ORDER BY id ASC")
+    else:
+        questions = data_manager.sort_questions(order)
+
+    is_admin = True if user_name == 'Admin' else False
+
+    return render_template("list.html", is_admin=is_admin, questions=questions)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
