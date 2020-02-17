@@ -21,7 +21,6 @@ def verify_user():
     return redirect('/login')
 
 
-
 @app.route('/list')
 def route_list():
     if 'user_name' not in session:
@@ -170,3 +169,4 @@ if __name__ == '__main__':
         port=8000,
         debug=True,
     )
+
